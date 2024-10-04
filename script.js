@@ -5,7 +5,7 @@ function changeContent(page) {
         case 'home':
             contentDiv.innerHTML = `
                 <img src=
-"https://github.com/plotia/plotia.github.io/blob/main/image.png">
+"image.png">
                 <h2>
                     Welcome to the Home Page!
                 </h2>
