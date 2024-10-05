@@ -1,5 +1,6 @@
 function changeContent(page) {
     var contentDiv = document.getElementById('content');
+    #home_transcriptsnresume_publications_projects_technologies_contact
 
     switch (page) {
         case 'home':
@@ -18,7 +19,9 @@ At Carnegie Mellon, I have developed a strong foundation in machine learning and
                 <h2>
                 Courses Taken :
                 </h2>
-                
+                <h3>
+                Mathematics & Programming
+                </h3>
                 <p>
                     Explore the different sections using
                     the navigation menu.
