@@ -1,6 +1,6 @@
 function changeContent(page) {
     var contentDiv = document.getElementById('content');
-    #home_transcriptsnresume_publications_projects_technologies_contact
+    #home_researchnexperience_SkillsnCoursestaken_transcriptsnresumenpublications_projects_technologies_contact
 
     switch (page) {
         case 'home':
@@ -15,28 +15,6 @@ function changeContent(page) {
 Currently, I am part of the Koes Group, led by Dr. David Ryan Koes, at the Department of Computational & Systems Biology, University of Pittsburgh. My research focuses on the E104D mutation-induced destabilization of the Triose Phosphate Isomerase (TPI) enzyme, a key player in the glycolysis pathway.
 
 At Carnegie Mellon, I have developed a strong foundation in machine learning and simulations of biological systems, furthering my expertise in computational drug discovery.
-                </p>
-                <h2>
-                Courses Taken :
-                </h2>
-                <h3>
-                Mathematics & Programming
-                </h3>
-                <h3>
-                Chemistry
-                </h3>
-                <h3>
-                Biology
-                </h3>
-                <h3>
-                Engineering
-                </h3>
-                <h3>
-                Pharmaceutics
-                </h3>
-                <p>
-                    Explore the different sections using
-                    the navigation menu.
                 </p>
             `;
             break;
