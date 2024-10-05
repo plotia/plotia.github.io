@@ -1,6 +1,6 @@
 function changeContent(page) {
     var contentDiv = document.getElementById('content');
-    #home_researchnexperience_SkillsnCoursestaken_transcriptsnresumenpublications_projects_technologies_contact
+    //home_researchnexperience_SkillsnCoursestaken_transcriptsnresumenpublications_projects_technologies_contact
 
     switch (page) {
         case 'home':
