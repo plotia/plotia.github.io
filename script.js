@@ -22,6 +22,18 @@ At Carnegie Mellon, I have developed a strong foundation in machine learning and
                 <h3>
                 Mathematics & Programming
                 </h3>
+                <h3>
+                Chemistry
+                </h3>
+                <h3>
+                Biology
+                </h3>
+                <h3>
+                Engineering
+                </h3>
+                <h3>
+                Pharmaceutics
+                </h3>
                 <p>
                     Explore the different sections using
                     the navigation menu.
