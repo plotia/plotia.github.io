@@ -20,7 +20,8 @@ At Carnegie Mellon, I have developed a strong foundation in machine learning and
             break;
         case 'about':
             contentDiv.innerHTML = `
-                <h2>About Us</h2>
+                <h1>Research :</h1>
+                <h2>Koes Group :</h2> 
                 <p>
                     This is the about page content. Learn more 
                     about our purpose and team.
