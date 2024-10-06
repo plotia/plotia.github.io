@@ -54,6 +54,18 @@ function changeContent(page) {
                 </p>
             `;
             break;
+        case 'Skills':
+            contentDiv.innerHTML = `
+                <h2>Molecular Dynamics :</h2> 
+                <p>Amber, Bash script, py3dmol</p>
+            `;
+            break;
+        case 'Courses':
+            contentDiv.innerHTML = `
+                <h2>Graduate Masters :</h2> 
+                <p>Automated biology</p>
+            `;
+            break;
         case 'contact':
             contentDiv.innerHTML = `
                 <h2>Contact Us</h2>
