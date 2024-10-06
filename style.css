@@ -49,6 +49,42 @@ nav a:hover {
     background-color: #45a049;
 }
 
+/* Sub-navigation styling */
+.sub-nav {
+    display: none; /* Hidden by default */
+    position: absolute;
+    background-color: #4caf50;
+    padding: 0;
+    margin-top: 0.5em;
+    list-style-type: none;
+    z-index: 1000;
+}
+
+.sub-nav li {
+    margin: 0;
+}
+
+.sub-nav a {
+    padding: 0.5em 1em;
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.sub-nav a:hover {
+    background-color: #45a049;
+}
+
+/* Show sub-navigation on hover */
+nav ul li:hover .sub-nav {
+    display: block;
+    position: absolute; /* Position the sub-nav relative to its parent */
+    top: 100%;
+    left: 0;
+    min-width: 160px; /* Adjust width as needed */
+}
+
 main {
     flex: 1;
     padding: 1em;
