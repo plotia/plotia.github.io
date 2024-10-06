@@ -18,18 +18,32 @@ At Carnegie Mellon, I have developed a strong foundation in machine learning and
                 </p>
             `;
             break;
-        case 'about':
+        case 'Research and Experience':
             contentDiv.innerHTML = `
-                <h1>Research :</h1>
                 <h2>Koes Group :</h2> 
                 <p>
-                    This is the about page content. Learn more 
-                    about our purpose and team.
+                    At the Koes Group, I am conducting molecular dynamics simulations of wild-type Triose Phosphate Isomerase (TPI) using AMBER. TPI plays a crucial role in the interconversion of dihydroxyacetone phosphate and D-glyceraldehyde-3-phosphate. The E104D mutation in TPI, while preserving enzymatic activity, compromises the enzyme's thermal stability, leading to increased degradation and a significant reduction in catalytic efficiency. Wild-type TPI dimerizes, preventing thermal degradation through a stabilizing internal water network. This water network is absent in the mutant form.
+
+My work involves simulating the wild-type TPI to calculate the root mean square fluctuation (RMSF) values. These RMSF results are compared with data from a colleague working on the mutant TPI to identify amino acid residues, particularly those near residue 104, that exhibit structural differences in flexibility or stability due to the mutation. This research aims to elucidate the molecular mechanisms behind the destabilization of mutant TPI.
                 </p>
+            `;
+            break;
+        case 'Research':
+            contentDiv.innerHTML = `
+                <h2>Koes Group :</h2> 
                 <p>
-                    We're passionate about creating engaging and
-                    informative SPAs.
+                    At the Koes Group, I am conducting molecular dynamics simulations of wild-type Triose Phosphate Isomerase (TPI) using AMBER. TPI plays a crucial role in the interconversion of dihydroxyacetone phosphate and D-glyceraldehyde-3-phosphate. The E104D mutation in TPI, while preserving enzymatic activity, compromises the enzyme's thermal stability, leading to increased degradation and a significant reduction in catalytic efficiency. Wild-type TPI dimerizes, preventing thermal degradation through a stabilizing internal water network. This water network is absent in the mutant form.
+
+My work involves simulating the wild-type TPI to calculate the root mean square fluctuation (RMSF) values. These RMSF results are compared with data from a colleague working on the mutant TPI to identify amino acid residues, particularly those near residue 104, that exhibit structural differences in flexibility or stability due to the mutation. This research aims to elucidate the molecular mechanisms behind the destabilization of mutant TPI.
                 </p>
+            `;
+            break;
+        case 'Experience':
+            contentDiv.innerHTML = `
+                <h1>Industrial :</h1> 
+                <h2>Zydus Lifesciences Ltd :</h2>
+                <p>
+                    Jayesh Ranpariya</p>
             `;
             break;
         case 'contact':
