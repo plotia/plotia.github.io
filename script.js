@@ -44,6 +44,7 @@ My work involves simulating the wild-type TPI to calculate the root mean square 
                 <h2>Zydus Lifesciences Ltd :</h2>
                 <p>
                     Jayesh Ranpariya</p>
+                <h2>Nectar Lifesciences</h2>
             `;
             break;
         case 'contact':
