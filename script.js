@@ -48,10 +48,7 @@ function changeContent(page) {
                 <p>
                     I gained experience in drug discovery and process optimization during my tenure at Zydus Lifesciences Ltd.
                 </p>
-                <h2><a href="path_to_new_page_or_external_link.html" target="_blank">Nectar Lifesciences</a></h2>
-                <p>
-                At Nectar Lifesciences, I worked on various aspects of pharmaceutical production and quality control.
-                </p>
+                <h2><a href="Nectar.html" target="_blank">Nectar Lifesciences</a></h2>
             `;
             break;
         case 'Skills':
