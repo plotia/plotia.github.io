@@ -48,7 +48,8 @@ function changeContent(page) {
                 <p>
                     I gained experience in drug discovery and process optimization during my tenure at Zydus Lifesciences Ltd.
                 </p>
-                <h2><a href="Nectar.html" target="_blank">Nectar Lifesciences</a></h2>
+                <h2 onclick="changeContent('Nectar')" style="cursor: pointer;"> Nectar Lifesciences Ltd.</h2>
+
             `;
             break;
         case 'Skills':
