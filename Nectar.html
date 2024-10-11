@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+"width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>SPA app</title>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <h1>
+                Pratham Lotia
+            </h1>
+            <h2>
+                Graduate Researcher at Department of Computational & Systems Biology, University of Pittsburgh
+            </h2>
+        </header>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#" onclick=
+                    "changeContent('home')">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="toggleSubNav('research-experience')">Research and Experience</a>
+                     <ul class="sub-nav" id="research-experience">
+                        <li><a href="#" onclick="changeContent('Research')">Research</a></li>
+                        <li><a href="#" onclick="changeContent('Experience')">Experience</a></li>
+                    </ul>
+                 </li>
+                <li>
+                    <a href="#" onclick="toggleSubNav('Skills-Courses')">Skills and Courses</a>
+                     <ul class="sub-nav" id="Skills-Courses">
+                        <li><a href="#" onclick="changeContent('Skills')">Skills</a></li>
+                        <li><a href="#" onclick="changeContent('Courses')">Courses taken</a></li>
+                    </ul>
+                 </li>
+                <li>
+                    <a href="#" onclick=
+                    "changeContent('contact')">
+                        Contact
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <main>
+            <div id="content">
+              <h2>Nectar Lifesciences :</h2>
+              <p>Nectar Lifesciences is a prominent pharmaceutical company based in India, specializing in the manufacturing and development of active pharmaceutical ingredients (APIs), formulations, and phytochemicals. Established in 1995, the company has grown into a leading global supplier of APIs, particularly focusing on antibiotics like cephalosporins and other essential medicines. With a strong emphasis on quality control and compliance with international regulatory standards, Nectar Lifesciences serves a wide range of markets across the globe, providing cost-effective and high-quality pharmaceutical products to improve healthcare outcomes.
+
+                At Nectar Lifesciences, it was my first step into the corporate world. It was out here, I came to know about how large scale manufacturing of pharmaceutical APIs work. It was a great experience to know the packaging of Cephalosporins through milling seiving and sifting.
+              </p>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
