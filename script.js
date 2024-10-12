@@ -24,11 +24,16 @@ function changeContent(page) {
                 <h2>About me:</h2>
                 <p>
                     I am a graduate student at Carnegie Mellon University, currently pursuing an M.S. in Biotechnology and Pharmaceutical Engineering. I hold a B.Tech. in Pharmaceutical Chemistry & Technology from the Institute of Chemical Technology, Mumbai.
-
+                </p>
+                <p>
                     Currently, I am part of the Koes Group, led by Dr. David Ryan Koes, at the Department of Computational & Systems Biology, University of Pittsburgh. My research focuses on the E104D mutation-induced destabilization of the Triose Phosphate Isomerase (TPI) enzyme, a key player in the glycolysis pathway.
-
+                </p>
+                <p>
                     At Carnegie Mellon, I have developed a strong foundation in machine learning and simulations of biological systems, furthering my expertise in computational drug discovery.
                 </p>
+                <h2>Contact :</h2>
+                <p>LinkedIn : </p>
+                <>Email :<>
             `;
             break;
         case 'Research':
