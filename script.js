@@ -33,13 +33,15 @@ function changeContent(page) {
             break;
         case 'Research':
             contentDiv.innerHTML = `
-                <h2>Koes Group :</h2>
                 <img src = "image-2.png" alt="Example Image" class="side-image">
                 <div class="text-content">
+                <h2>Koes Group :</h2>
                 <p>
                 At the Koes Group, since fall 2024 I am conducting molecular dynamics simulations of wild-type Triose Phosphate Isomerase (TPI) using AMBER. TPI plays a crucial role in the interconversion of dihydroxyacetone phosphate and D-glyceraldehyde-3-phosphate. The E104D mutation in TPI, while preserving enzymatic activity, compromises the enzyme's thermal stability, leading to increased degradation and a significant reduction in catalytic efficiency. Wild-type TPI dimerizes, preventing thermal degradation through a stabilizing internal water network. This water network is absent in the mutant form. My work involves simulating the wild-type TPI to calculate the root mean square fluctuation (RMSF) values. These RMSF results are compared with data from a colleague working on the mutant TPI to identify amino acid residues, particularly those near residue 104, that exhibit structural differences in flexibility or stability due to the mutation. Upon observing the crystal structure of the wild type and the mutant, we identified that there were some missing H bonds and Salt bridges in the mutant which are present in the wild type residue that lead to calculating distances between the atoms of the corresponding residues and comparing the mutant to that of the wild type. This research aims to elucidate the molecular mechanisms behind the destabilization of mutant TPI.
                 </p>
                 <p>Skills: Molecular Dynamics, Amber, Python, bash, ssh, MDAnalysis, py3dmol, VMD</p>
+                <img src = "photo-2024-07-12-21-17-02.jpg" alt="Example Image" class="side-image">
+                <div class="text-content">
                 <h2>Niepa μ biointerface Lab :</h2>
                 <p>
                 Before joining the Koes Group, I worked throughout the summer at the Niepa Microbiointerface Lab, where I focused on testing the rheological properties of microbes. My research centered on biofilms formed by ESKAPEE pathogens such as E. coli, P. aeruginosa, and S. aureus. The goal was to investigate whether the use of efflux pump inhibitors could alter the rheological properties of these biofilms, signaling their potential role as biofilm disruptors. During this time, I gained proficiency in using a rheometer and conducted a series of experiments to measure changes in shear stress versus shear rate. This experience deepened my understanding of microbial biofilms and their mechanical properties, while honing my technical skills in bioengineering experimentation.
