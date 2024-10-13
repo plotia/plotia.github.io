@@ -71,9 +71,12 @@ function changeContent(page) {
                 <h2>Zydus Lifesciences Ltd :</h2>
                 <p>
                     I gained experience in drug discovery and process optimization during my tenure at Zydus Lifesciences Ltd.
-                </p>
-                <h2 onclick="changeContent('Nectar')" style="cursor: pointer;"> Nectar Lifesciences Ltd.</h2>
+                <h2>Nectar Lifesciencs Ltd.</h2> 
+            <p>Nectar Lifesciences is a prominent pharmaceutical company based in India, specializing in the manufacturing and development of active pharmaceutical ingredients (APIs), formulations, and phytochemicals. Established in 1995, the company has grown into a leading global supplier of APIs, particularly focusing on antibiotics like cephalosporins and other essential medicines. With a strong emphasis on quality control and compliance with international regulatory standards, Nectar Lifesciences serves a wide range of markets across the globe, providing cost-effective and high-quality pharmaceutical products to improve healthcare outcomes.</p>
 
+            <p>
+            At Nectar Lifesciences, it was my first step into the corporate world. It was out here, I came to know about how large scale manufacturing of pharmaceutical APIs work. It was a great experience to know the packaging of Cephalosporins through milling seiving and sifting.
+              </p>
             `;
         case 'Nectar':
             contentDiv.innerHTML = `
