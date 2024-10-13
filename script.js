@@ -33,7 +33,7 @@ function changeContent(page) {
                 </p>
                 <h2>Contact :</h2>
                 <p>LinkedIn : </p>
-                <>Email :<>
+                <p>Email :</p>
             `;
             break;
         case 'Research':
