@@ -28,6 +28,10 @@ function changeContent(page) {
             window.location.href = "experiences.html"
         case 'Projects':
             window.location.href = "projects.html"
+        case 'Future Goals':
+            window.location.href = "future.html"
+        case 'Hobbies':
+            window.location.href = "hobbies.html"
             break;
         case 'Resume':
             window,location.href = "Pratham Lotia Resume.pdf"
