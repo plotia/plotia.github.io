@@ -2,7 +2,7 @@
 *My personal website*
 <details>
   <summary>Click to expand</summary>
-  plotia.github.io
+  \href{plotia.github.io}{Click here}
 </details>
   
   ### Hidden Content
