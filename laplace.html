@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>SPA app</title>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <h1>Pratham Lotia</h1>
+            <h2>Graduate Researcher at Department of Computational & Systems Biology, University of Pittsburgh</h2>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="changeContent('home')">Home</a></li>
+                <li>
+                    <a href="#" onclick="toggleSubNav('research-experience')">Research and Experience</a>
+                    <ul class="sub-nav" id="research-experience">
+                        <li><a href="#" onclick="changeContent('Research')">Research</a></li>
+                        <li><a href="#" onclick="changeContent('Experience')">Experience</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <ul><a href="projects.html">Projects</a></ul>
+                </li>
+                <li><a href="#" onclick="changeContent('contact')">Contact</a></li>
+            </ul>
+        </nav>
+        <h1>Laplace</h1>
+        <script src="script.js"></script>
+    </div>
+</body>
+</html> 
