@@ -29,6 +29,8 @@ function changeContent(page) {
         case 'Projects':
             window.location.href = "projects.html"
             break;
+        case 'Resume':
+            window,location.href = "Pratham Lotia Resume.pdf"
         default:
             contentDiv.innerHTML = '<h2>Page not found!</h2>';
     }
