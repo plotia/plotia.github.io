@@ -2,7 +2,7 @@
 *My personal website*
 <details>
   <summary>Click to expand</summary>
-  [Click here](plotia.github.io)
+  plotia.github.io
 </details>
   
   ### Hidden Content
