@@ -25,7 +25,7 @@ function changeContent(page) {
             window.location.href = "research.html";
             break;
         case 'Experience':
-            window.location.href = "projects.html"
+            window.location.href = "experiences.html"
         case 'Projects':
             window.location.href = "projects.html"
             break;
