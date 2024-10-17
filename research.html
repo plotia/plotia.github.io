@@ -135,64 +135,7 @@
             <div class="container">
                 <div class="box1">
                     <h2>Niepa μ biointerface Lab :</h2>
-                    <div class="carousel">
-                        <div class="carousel-images" >
-                            <img src="photo-2024-07-12-21-17-02.jpg" alt="Image 1" class="carousel-image" width="5%">
-                            <img src="Rheometer.png" alt="Image 2" class="carousel-image" width="5%">
-                        </div>
-                        <button class="carousel-button prev" onclick="changeSlide(-1)">&#10094;</button>
-                        <button class="carousel-button next" onclick="changeSlide(1)">&#10095;</button>
-                    </div>
-
-                    <style>
-                        .carousel {
-                            position: relative;
-                            max-width: 100%;
-                            margin: auto;
-                            overflow: hidden;
-                        }
-
-                        .carousel-images {
-                            display: flex;
-                            transition: transform 0.5s ease-in-out;
-                        }
-
-                        .carousel-image {
-                            min-width: 100%;
-                            height: 10%;
-                            width: 10%;
-                        }
-
-                        .carousel-button {
-                            position: absolute;
-                            top: 50%;
-                            transform: translateY(-50%);
-                            background-color: rgba(0, 0, 0, 0.5);
-                            color: white;
-                            border: none;
-                            padding: 10px;
-                            cursor: pointer;
-                        }
-
-                        .carousel-button.prev {
-                            left: 10px;
-                        }
-
-                        .carousel-button.next {
-                            right: 10px;
-                        }
-                    </style>
-
-                    <script>
-                        let currentSlide = 0;
-
-                        function changeSlide(direction) {
-                            const slides = document.querySelectorAll('.carousel-image');
-                            currentSlide = (currentSlide + direction + slides.length) % slides.length;
-                            document.querySelector('.carousel-images').style.transform = `translateX(-${currentSlide * 100}%)`;
-                        }
-                    </script>
-                    <!-- <img src="lab-vid.gif" alt="Ly Lab Image" class="side-image"> -->
+                    <img src="photo-2024-07-12-21-17-02.jpg" alt="Niepa Lab Image" class="side Image">
                 </div>
                 <div class="box2">
                     <p>
