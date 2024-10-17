@@ -132,27 +132,28 @@
 
         <!-- Section 2: Niepa Lab -->
         <section id="niepaLab">
-            <div class="container">
-                <div class="box1">
-                    <h2>Niepa μ biointerface Lab :</h2>
-                    <div class="carousel">
+    <div class="container">
+        <div class="box1">
+            <h2>Niepa μ biointerface Lab :</h2>
+            <div class="carousel" id="niepaCarousel">
                 <div class="carousel-images">
                     <img src="photo-2024-07-12-21-17-02.jpg" alt="Niepa Lab Image 1" class="carousel-image">
-                    <img src="Rheometer.jpg" alt="Niepa Lab Image 2" class="carousel-image">
-                    <img src="Scraping.jpg" alt="Niepa Lab Image 3" class="carousel-image">
+                    <img src="Rheometer.png" alt="Rheometer Image" class="carousel-image">
+                    <img src="Scraping.png" alt="Scraping Image" class="carousel-image">
                 </div>
-                <button class="carousel-button prev" onclick="changeSlide(-1)">&#10094;</button>
-                <button class="carousel-button next" onclick="changeSlide(1)">&#10095;</button>
-                </div>
+                <button class="carousel-button prev" onclick="changeSlide('niepaCarousel', -1)">&#10094;</button>
+                <button class="carousel-button next" onclick="changeSlide('niepaCarousel', 1)">&#10095;</button>
             </div>
-                <div class="box2">
-                    <p>
-                        Before joining the Koes Group, I worked throughout the summer at the Niepa Microbiointerface Lab, where I focused on testing the rheological properties of microbes. My research centered on biofilms formed by ESKAPEE pathogens such as E. coli, P. aeruginosa, and S. aureus.
-                    </p>
-                    <p>Skills: Rheometry, Tensiometry, Bench-Top Spectrophotometer, Cell Culture</p>
-                </div>
-            </div>
-          <style>
+        </div>
+        <div class="box2">
+            <p>
+                Before joining the Koes Group, I worked throughout the summer at the Niepa Microbiointerface Lab, where I focused on testing the rheological properties of microbes. My research centered on biofilms formed by ESKAPEE pathogens such as E. coli, P. aeruginosa, and S. aureus.
+            </p>
+            <p>Skills: Rheometry, Tensiometry, Bench-Top Spectrophotometer, Cell Culture</p>
+        </div>
+    </div>
+
+    <style>
         .carousel {
             position: relative;
             max-width: 100%;
@@ -191,15 +192,17 @@
     </style>
 
     <script>
-        let currentSlideNiepa = 0;
+        function changeSlide(carouselId, direction) {
+            const carousel = document.getElementById(carouselId);
+            const slides = carousel.querySelectorAll('.carousel-image');
+            let currentSlide = parseInt(carousel.dataset.currentSlide) || 0;
 
-        function changeSlide(direction) {
-            const slides = document.querySelectorAll('#niepaLab .carousel-image');
-            currentSlideNiepa = (currentSlideNiepa + direction + slides.length) % slides.length;
-            document.querySelector('#niepaLab .carousel-images').style.transform = `translateX(-${currentSlideNiepa * 100}%)`;
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            carousel.dataset.currentSlide = currentSlide;
+            carousel.querySelector('.carousel-images').style.transform = `translateX(-${currentSlide * 100}%)`;
         }
-    </script>    
-        </section>
+    </script>
+</section>
 
         <!-- Section 3: The Ly Lab -->
         <section id="lyLab">
