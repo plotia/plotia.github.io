@@ -34,7 +34,7 @@ function changeContent(page) {
             window.location.href = "hobbies.html"
             break;
         case 'Resume':
-            window,location.href = "Pratham Lotia Resume.pdf"
+            window,location.href = "Pratham_Lotia_Resume.pdf"
         default:
             contentDiv.innerHTML = '<h2>Page not found!</h2>';
     }
