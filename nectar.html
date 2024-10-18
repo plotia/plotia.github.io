@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Pratham's Website</title>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <h1>Pratham Lotia</h1>
+            <h2>Graduate Researcher at Department of Computational & Systems Biology, University of Pittsburgh</h2>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="changeContent('home')">Home</a></li>
+                <li>
+                    <a href="#" onclick="toggleSubNav('research-experience')">Research and Experience</a>
+                    <ul class="sub-nav" id="research-experience">
+                        <li><a href="#" onclick="changeContent('Research')">Research</a></li>
+                        <li><a href="#" onclick="changeContent('Experience')">Experience</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <ul><a href="projects.html">Projects</a></ul>
+                </li>
+                <li><a href="#" onclick="changeContent('Resume')">Resume</a></li>
+                <li><a href="#" onclick="changeContent('Future Goals')">Future Goals</a></li>
+                <li><a href="#" onclick="changeContent('Hobbies')">Hobbies</a></li>
+            </ul>
+        </nav>
+        <main>
+            <div id="content" class="content-section">
+                <h1 style="text-align: center;">Industrial Training</h1>    
+                <img src="nectar.png">
+                        <h2>Nectar Lifesciences Ltd.</h2>
+                        <p>
+                           **Nectar Lifesciences Ltd.** is a prominent pharmaceutical company in India, known for its expertise in the production of Active Pharmaceutical Ingredients (APIs), finished dosage forms, and intermediates. The company has established itself as a leading global supplier of **cephalosporins**, a critical class of antibiotics used to treat a wide range of bacterial infections. Nectar Lifesciences is involved in the entire value chain of cephalosporins, from API manufacturing to finished dosage forms, ensuring high quality and cost-effectiveness. With cutting-edge manufacturing facilities and a commitment to innovation and regulatory compliance, the company continues to serve global healthcare needs by providing reliable, affordable pharmaceutical products.
+                        </p>
+                        <p>For more information on Nectar Lifesciences ltd. visit <a href="https://www.neclife.com/">neclife.com</a></p>
+                        <p>Please  <a href="Neclife Certificate.jpg">click here</a> to view my Neclife In Plant Training certificate</p>
+                        <h2>Training Experience</h2>
+                        <p>Over at Nectar Lifesciences, Derra Bassi, India, I studied the large scale synthesis of 2 cephalosporins namely Cefixime Trihydrate and Cefuroxime Axetil. Key takeaways from their synthesis is covered in detail below</p>
+                        <h3> Cefixime Trihydrate Synthesis :</h3>
+                        <p>The synthesis of Cefixime Trihydrate begins with the preparation of key intermediates like GVNE, GVNA, and 7-AVCA. The process utilizes a glass-lined reactor (GLR) for handling highly corrosive substances like concentrated HCl, and a series of steps are followed, including halogen substitution and chain elongation. Temperature control is critical throughout, managed by a utility header, which allows for precise adjustments via hot water, cold water, and brine systems. After each reaction step, samples are sent to quality control (QC) for analysis. The key goal is the cleavage and reconfiguration of peptide bonds in the beta-lactam ring, which is essential for the synthesis of the 7-AVCA intermediate.</p>
+                        <p>Following the synthesis of 7-AVCA, the process involves multiple purification stages including enzymatic hydrolysis with penicillin G-amidase, carbon treatment for removing impurities, and crystallization to isolate the desired API. After crystallization, centrifugation and drying techniques are employed to produce semi-dry 7-AVCA, which is further processed into Cefixime Trihydrate. A key step in this transformation is the preparation of the ACMV stage, where methanol and triethylamine are used for pH control and stabilization. The final product, after drying and milling, is stored in controlled conditions to maintain its pharmaceutical grade​</p>
+                        <h3>Cefuroxime Axetil Synthesis :</h3>
+                        <p>The synthesis of Cefuroxime Axetil follows a more complex pathway, beginning with the preparation of D-7-ACA (Desacetyl-7-aminocephalosporanic acid) and proceeding through several intermediate stages, such as CFUH and CFUA. The process includes multiple cooling and heating cycles, where reagents like chlorosulfonyl isocyanate (CSI) are used under controlled conditions due to their hazardous nature. Strict temperature control is essential, particularly during the chelation and scrapping phases, which ensure proper interaction between reagents and prevent the formation of by-products or unwanted impurities. After each critical step, samples are sent to QC for verification of purity and composition.</p>
+                        <p>The final stages involve esterification to produce Cefuroxime Axetil in its crystalline form. This is followed by thorough washing and centrifugation to remove residual impurities and solvents. The product undergoes drying in the Rotocone Vacuum Dryer (RCVD), which ensures that moisture content is reduced to acceptable levels. The crystalline product is then further refined through spray drying, which converts it into an amorphous form to prevent polymorphism. After final drying and packaging, the product is tested once more to ensure it meets quality standards before it is released as the final Cefuroxime Axetil AP</p>
+                        <p>For complete report on industrial training at Zydus Lifesciences ltd. visit <a href="Neclife Report.pdf">In Plant Training Report (Nectar Lifesciences Ltd.)</a></p>
+                  </div>
+        </main>
+        
+    </div>
+    <script src="script.js"></script>
+</body>
+  
+</html> 
