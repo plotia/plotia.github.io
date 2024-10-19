@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Flexbox container for side-by-side layout */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px;
+            border: 1px solid #000;
+            margin: 20px 0;
+        }
+
+        /* Image and text containers */
+        .box1 {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .box2 {
+            flex: 2;
+            padding: 10px;
+        }
+
+        img.side-image {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+        }
+
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Section divs styling */
+        section {
+            border: 1px solid #ddd;
+            margin: 20px 0;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation styling */
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Carousel styling */
+        .carousel {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            align-items: center;
+        }
+
+        .carousel-image {
+            min-width: 100%;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .carousel-button.prev {
+            left: 10px;
+        }
+
+        .carousel-button.next {
+            right: 10px;
+        }
+    </style>
+    <title>Pratham's Website</title>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <h1>Pratham Lotia</h1>
+            <h2>Graduate Researcher at Department of Computational & Systems Biology, University of Pittsburgh</h2>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="changeContent('home')">Home</a></li>
+                <li>
+                    <a href="#" onclick="toggleSubNav('research-experience')">Research and Experience</a>
+                    <ul class="sub-nav" id="research-experience">
+                        <li><a href="#" onclick="changeContent('Research')">Research</a></li>
+                        <li><a href="#" onclick="changeContent('Experience')">Experience</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <ul><a href="projects.html">Projects</a></ul>
+                </li>
+                <li><a href="#" onclick="changeContent('Resume')">Resume</a></li>
+                <li><a href="#" onclick="changeContent('Future Goals')">Future Goals</a></li>
+                <li><a href="#" onclick="changeContent('Hobbies')">Hobbies</a></li>
+            </ul>
+        </nav>
+        <main>
+            <div id="content" class="content-section">
+                <h1 style="text-align: center;">Synthesis of 3 Hydroxy Acetophenone</h1>    
+                <div class="carousel" id="carouselExample" data-current-slide="0">
+                    <button class="carousel-button prev" onclick="changeSlide('carouselExample', -1)">&#10094;</button>
+                    <div class="carousel-images">
+                        <img src="fyp1.png" class="carousel-image" alt="Image 1">
+                        <img src="fyp2.png" class="carousel-image" alt="Image 2">
+                        <img src="fyp3.png" class="carousel-image" alt="Image 3">
+                        <img src="fyp4.png" class="carousel-image" alt="Image 4">
+                    </div>
+                    <button class="carousel-button next" onclick="changeSlide('carouselExample', 1)">&#10095;</button>
+                </div>
+                        <h2>Introduction :</h2>
+                        <p>The synthesis of 3-Hydroxy Acetophenone plays a crucial role in the pharmaceutical industry due to its importance as an intermediate in the production of sympathomimetic drugs and anti-inflammatory agents. Structurally, 3-Hydroxy Acetophenone contains a phenyl ring, an acetyl group, and a hydroxy group at the meta position, which makes it highly selective for alpha-adrenergic receptors, a key feature in sympathomimetics. However, synthesizing this compound is challenging due to the difficulty in achieving meta substitution of the hydroxyl group. Traditional methods, such as hydroxylation and sulfonation, often involve harsh conditions and produce significant acid waste, necessitating more efficient and environmentally friendly processes. This project aims to explore various synthetic routes, including nitration, reduction, and diazotization, to improve the yield and purity of 3-Hydroxy Acetophenone while minimizing environmental impact, making it a more viable intermediate for large-scale pharmaceutical applications.</p>
+                        <h2>Materials and Methods :</h2>
+                        <p>
+                        For this project, the synthesis of 3-Hydroxy Acetophenone was conducted using a multi-step approach involving nitration, reduction, and diazotization reactions. The starting material, acetophenone, was subjected to nitration using a mixture of nitric acid and sulfuric acid under controlled low-temperature conditions to form meta-nitro acetophenone. This intermediate was then reduced using tin powder and hydrochloric acid, producing meta-amino acetophenone. The final step involved diazotization of meta-amino acetophenone with sodium nitrite and concentrated hydrochloric acid, followed by treatment with water and ethanol to yield 3-Hydroxy Acetophenone as a crystalline product. Each step of the reaction required careful monitoring of temperature and pH to ensure high yield and minimal impurities. Thin-layer chromatography (TLC) was used throughout the process to monitor reaction progress and confirm the identity of intermediates and the final product.
+                        <br><br>
+                        The experimental procedures were carried out using standard laboratory equipment, including reflux condensers, magnetic stirrers, ice baths, and a rotary evaporator for solvent removal. A Cybio Felix liquid-handling robot was used to automate the addition of reagents and the transfer of reaction mixtures to minimize human error and increase reproducibility. The Cybio Felix system allowed for precise control over liquid dispensing, ensuring consistent results across multiple trials. After the reactions, the product was purified through recrystallization from ethanol, and the final yield and purity were determined through nuclear magnetic resonance (NMR) and melting point analysis. This approach allowed for the systematic comparison of different synthetic routes and provided insights into optimizing reaction conditions for large-scale production of 3-Hydroxy Acetophenone.
+                        </p>
+                        <h2>Experimental Section :</h2>
+                        <p>In the experimental section, several trials were conducted to optimize the synthesis of 3-Hydroxy Acetophenone. Initial attempts at nitrating acetophenone faced challenges with low yield and product impurities, which were addressed by adjusting reaction temperatures and reagent addition rates. After obtaining meta-nitro acetophenone, the reduction to meta-amino acetophenone was achieved successfully, though some trials required adjustments in tin powder concentration and reaction time to improve yield. The diazotization of meta-amino acetophenone presented challenges related to product stability, with some experiments producing by-products. Through repeated trials and optimizations, a yellowish-orange crystalline form of 3-Hydroxy Acetophenone was eventually obtained, with its structure confirmed using thin-layer chromatography (TLC) and nuclear magnetic resonance (NMR) analysis. Throughout the experiments, careful control of reaction conditions and systematic troubleshooting led to improvements in both yield and purity, allowing for a thorough understanding of the optimal synthesis pathway.
+                        </p>
+            </div>
+        </main>
+
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function changeSlide(carouselId, direction) {
+            const carousel = document.getElementById(carouselId);
+            const slides = carousel.querySelectorAll('.carousel-image');
+            let currentSlide = parseInt(carousel.dataset.currentSlide) || 0;
+
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            carousel.dataset.currentSlide = currentSlide;
+            carousel.querySelector('.carousel-images').style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        function changeLySlide(direction) {
+            const carousel = document.querySelector('#lyLab .carousel');
+            const slides = carousel.querySelectorAll('.carousel-image');
+            let currentSlide = parseInt(carousel.dataset.currentSlide) || 0;
+
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            carousel.dataset.currentSlide = currentSlide;
+            carousel.querySelector('.carousel-images').style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        // Smooth scroll to the target div
+        function scrollToDiv(divId) {
+            document.getElementById(divId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+  
+</html> 
