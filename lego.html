@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Flexbox container for side-by-side layout */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px;
+            border: 1px solid #000;
+            margin: 20px 0;
+        }
+
+        /* Image and text containers */
+        .box1 {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .box2 {
+            flex: 2;
+            padding: 10px;
+        }
+
+        img.side-image {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+        }
+
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Section divs styling */
+        section {
+            border: 1px solid #ddd;
+            margin: 20px 0;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation styling */
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Carousel styling */
+        .carousel {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            align-items: center;
+        }
+
+        .carousel-image {
+            min-width: 100%;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .carousel-button.prev {
+            left: 10px;
+        }
+
+        .carousel-button.next {
+            right: 10px;
+        }
+    </style>
+    <title>Pratham's Website</title>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <h1>Pratham Lotia</h1>
+            <h2>Graduate Researcher at Department of Computational & Systems Biology, University of Pittsburgh</h2>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="changeContent('home')">Home</a></li>
+                <li>
+                    <a href="#" onclick="toggleSubNav('research-experience')">Research and Experience</a>
+                    <ul class="sub-nav" id="research-experience">
+                        <li><a href="#" onclick="changeContent('Research')">Research</a></li>
+                        <li><a href="#" onclick="changeContent('Experience')">Experience</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <ul><a href="projects.html">Projects</a></ul>
+                </li>
+                <li><a href="#" onclick="changeContent('Resume')">Resume</a></li>
+                <li><a href="#" onclick="changeContent('Future Goals')">Future Goals</a></li>
+                <li><a href="#" onclick="changeContent('Hobbies')">Hobbies</a></li>
+            </ul>
+        </nav>
+        <main>
+            <div id="content" class="content-section">
+                <h1 style="text-align: center;">Overall Event Head</h1>    
+                <div class="carousel" id="carouselExample" data-current-slide="0">
+                    <button class="carousel-button prev" onclick="changeSlide('carouselExample', -1)">&#10094;</button>
+                    <div class="carousel-images">
+                        <img src="image-2.png" class="carousel-image" alt="Image 1">
+                        <img src="image-3.jpeg" class="carousel-image" alt="Image 2">
+                        <video src="lab-vid.mp4" class="carousel-image" controls></video>
+                    </div>
+                    <button class="carousel-button next" onclick="changeSlide('carouselExample', 1)">&#10095;</button>
+                </div>
+                        <h2>About The Bombay Technologist</h2>
+                        <p>
+                           The Bombay Technologist is the in-house peer reviewed research Journal of the Institute of Chemical Technology published semi-annually.
+
+It was started in 1951, by the erstwhile Technological Association, the highest decision making student body of the institute.Professor K. Venkatraman, a pioneer in Chemical Technology himself, envisioned the concept of an in-house research journal run by the institute and thus laid the foundation of Bombay Technologist.
+The Institute of Chemical Technology is itself an internationally renowned center for research. It churns out hundreds of quality research publications and numerous patents every year solely in Chemical Engineering and Technology. Such a distinction is enjoyed by few, globally.
+                        </p>
+                        <p>For more information visit <a href="https://bombaytechnologist.in/index.php/bombaytechnologist">www.bombaytechnologist.com</a></p>
+                        <h2>Overall Event Head Position</h2>
+                            <p>As the overall event head of The Bombay Technologist, I am tasked with coordinating and overseeing various responsibilities to ensure the club's success. This includes organizing regular meetings and discussions, selecting engaging research papers for review, and inviting guest speakers to share their expertise. I manage logistics for events, such as securing venues, arranging materials, and promoting activities to attract participants. A key aspect of my role involves budget handling, where I develop and monitor financial plans for events, ensuring we stay within our allocated budget while maximizing resources. Additionally, I oversee the distribution of club merchandise, coordinating orders and ensuring that members receive items that foster club identity and spirit. Collaborating with club members and faculty, I strive to create an inclusive environment that encourages participation and intellectual discourse, while continually gathering feedback to improve our initiatives and enhance our community's academic growth in technology and related fields.</p>
+                    </div>
+        </main>
+
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function changeSlide(carouselId, direction) {
+            const carousel = document.getElementById(carouselId);
+            const slides = carousel.querySelectorAll('.carousel-image');
+            let currentSlide = parseInt(carousel.dataset.currentSlide) || 0;
+
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            carousel.dataset.currentSlide = currentSlide;
+            carousel.querySelector('.carousel-images').style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        function changeLySlide(direction) {
+            const carousel = document.querySelector('#lyLab .carousel');
+            const slides = carousel.querySelectorAll('.carousel-image');
+            let currentSlide = parseInt(carousel.dataset.currentSlide) || 0;
+
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            carousel.dataset.currentSlide = currentSlide;
+            carousel.querySelector('.carousel-images').style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        // Smooth scroll to the target div
+        function scrollToDiv(divId) {
+            document.getElementById(divId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+  
+</html> 
