@@ -1,5 +1,219 @@
 <!DOCTYPE html>
+<html lang="en"><!DOCTYPE html>
 <html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Flexbox container for side-by-side layout */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px;
+            border: 1px solid #000;
+            margin: 20px 0;
+        }
+
+        /* Image and text containers */
+        .box1 {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .box2 {
+            flex: 2;
+            padding: 10px;
+        }
+
+        img.side-image {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+        }
+
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Section divs styling */
+        section {
+            border: 1px solid #ddd;
+            margin: 20px 0;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation styling */
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Carousel styling */
+        .carousel {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            align-items: center;
+        }
+
+        .carousel-image {
+            min-width: 100%;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .carousel-button.prev {
+            left: 10px;
+        }
+
+        .carousel-button.next {
+            right: 10px;
+        }
+    </style>
+    <title>Pratham's Website</title>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <h1>Pratham Lotia</h1>
+            <h2>Graduate Researcher at Department of Computational & Systems Biology, University of Pittsburgh</h2>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="changeContent('home')">Home</a></li>
+                <li>
+                    <a href="#" onclick="toggleSubNav('research-experience')">Research and Experience</a>
+                    <ul class="sub-nav" id="research-experience">
+                        <li><a href="#" onclick="changeContent('Research')">Research</a></li>
+                        <li><a href="#" onclick="changeContent('Experience')">Experience</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <ul><a href="projects.html">Projects</a></ul>
+                </li>
+                <li><a href="#" onclick="changeContent('Resume')">Resume</a></li>
+                <li><a href="#" onclick="changeContent('Future Goals')">Future Goals</a></li>
+                <li><a href="#" onclick="changeContent('Hobbies')">Hobbies</a></li>
+            </ul>
+        </nav>
+        <main>
+            <div id="content" class="content-section">
+                <h1 style="text-align: center;">Hobbies</h1>
+                <p>I love collecting old maps, especially of late 1500s to 1900s maps of United Mother India (माँ भारती)</p>
+                <div class="carousel" id="carouselExample" data-current-slide="0">
+                    <button class="carousel-button prev" onclick="changeSlide('carouselExample', -1)">&#10094;</button>
+                    <div class="carousel-images">
+                        <img src="l1.jpeg" class="carousel-image" alt="Image 1">
+                        <img src="l2.jpeg" class="carousel-image" alt="Image 2">
+                        <img src="l3.jpeg" class="carousel-image" alt="Image 3">
+                        <img src="l4.jpeg" class="carousel-image" alt="Image 4" width="15%" height="3%">
+                        <video src="l5.mp4" class="carousel-image" controls width="5%"></video>
+                        <video src="l6u.mp4" class="carousel-image" controls></video>
+                    </div>
+                    <button class="carousel-button next" onclick="changeSlide('carouselExample', 1)">&#10095;</button>
+                </div>
+                        <h2>The Idea & Motivation :</h2>
+                        <p>
+                            As a lifelong Lego enthusiast and miniature car fan, I have always been captivated by the intricate workings of motors and the engineering concepts behind motor engines using pistons. My passion took a significant turn when I received a special gift from Nazneen Aunty—a Lego Technic set featuring custom miniature gears. This set not only rekindled my love for building but also ignited an idea to incorporate a DC motor, enabling me to create a fully functional car. However, I soon encountered challenges with gear alignment, struggling to achieve the perfect fit for smooth and efficient movement. This initial obstacle only fueled my determination to find a solution and explore the potential of combining my hobbies.
+<br><br>
+Upon beginning my master’s program at Carnegie Mellon University, I discovered the TechSpark lab, a treasure trove of resources that included motors, 3D printers, and a supportive community of fellow innovators. With access to STL files of Lego designs from Brick Club, I was able to achieve the precision necessary for my model. The combination of advanced tools and collaborative spirit allowed me to experiment and iterate on my design effectively. Additionally, I researched various radio control circuit and receiver models to ensure reliable performance, ultimately selecting one from Amazon that best suited my project needs. This foundational experience not only advanced my technical skills but also set the stage for an exciting journey in building my custom RC Lego car.
+                        </p>
+                        <h2>Challenges :</h2>
+                        <p>
+                            Throughout the project, I encountered several significant challenges, particularly in sourcing the right motor. The first motor I tried, which is shown in the second-to-last slide, was capable of rotating the axle without any load, meaning it worked fine without the tires or the weight of the car. However, it was only after completing the entire assembly that I discovered it was ineffective for my needs. This setback left me feeling disheartened, but instead of giving up, I chose to dismantle the car entirely and rethink the design for mounting the motors. Ultimately, I purchased a Lego-compatible motor from Temu, but it presented another hurdle: it was not compatible with my receiver circuit. To resolve this, I had to apply a creative workaround to make the two components work together.
+                            <br><br>
+                            Another major challenge arose during the 3D printing process. Often, the designs I created did not translate well into printed models, leading to inaccuracies in dimensions and material thickness. When dealing with miniature components, even slight errors can result in parts that are either too fragile or not functional. I faced issues with support removal, where the prints could chip or break during the process. Additionally, human error sometimes caused misalignment in the prints, leading to further complications. These obstacles led to numerous wasted prototypes, which not only affected my timeline but also incurred significant financial losses on this personal project. Despite these setbacks, each challenge offered valuable lessons that helped refine my approach and enhance my problem-solving skills.
+                        </p>
+                        <h2>Jugaad/ Tricks :</h2>
+                         <p>A significant challenge I faced was the incompatibility between the receiver circuit and the Lego motor from Temu used for the back motor. The receiver circuit had two wires—one for positive and one for negative—while the Lego motor featured a single input designed as a plastic mold with four metal spots. This mold was specifically made for a Lego receiver, functioning like a lock and key to ensure a proper connection. I initially attempted to solder the circuit wires directly to the metal spots on the mold, but the results were disappointing; the soldering was weak and brittle, and the heat from the soldering process caused the nearby plastic to melt.
+                             <br><br>
+                             To overcome this issue, I employed a creative workaround by using mini jumper cables to connect the motor and the receiver circuit. These jumper wires, equipped with crocodile clips, provided a reliable way to grip the metal spots securely while also accommodating the receiver circuit wires. This solution allowed me to establish a functional circuit without the need for soldering, ultimately resolving the compatibility issue effectively.
+                         </p>
+                        <h2>End result</h2>
+                <p>To visit my LinkedIn Post over this project, do visit <a href="https://www.linkedin.com/feed/update/urn:li:activity:7209403837642637314/"> Building a Custom RC Lego Car</a></p>
+                <video style="align: center;" src="l6u.mp4" class="carousel-image" controls></video>
+            </div>
+        </main>
+
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function changeSlide(carouselId, direction) {
+            const carousel = document.getElementById(carouselId);
+            const slides = carousel.querySelectorAll('.carousel-image');
+            let currentSlide = parseInt(carousel.dataset.currentSlide) || 0;
+
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            carousel.dataset.currentSlide = currentSlide;
+            carousel.querySelector('.carousel-images').style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        function changeLySlide(direction) {
+            const carousel = document.querySelector('#lyLab .carousel');
+            const slides = carousel.querySelectorAll('.carousel-image');
+            let currentSlide = parseInt(carousel.dataset.currentSlide) || 0;
+
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            carousel.dataset.currentSlide = currentSlide;
+            carousel.querySelector('.carousel-images').style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        // Smooth scroll to the target div
+        function scrollToDiv(divId) {
+            document.getElementById(divId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+  
+</html> 
 
 <head>
     <meta charset="UTF-8">
