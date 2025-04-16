@@ -19,25 +19,32 @@
 <script>
   var stage = new NGL.Stage("viewport");
 
+  // Load protein structure
   stage.loadFile("frame1_2vom.pdb").then(function(o) {
     o.addRepresentation("cartoon");
     o.autoView();
   });
 
+  // Map configuration with GIST .dx files
   var maps = {
-    esw: {file: "gist-ESW-dens_2VOM.dx", color: "red", isolevel: -0.007},
-    strans: {file: "gist-Strans-dens_2VOM.dx", color: "blue", isolevel: -0.007},
-    sorient: {file: "gist-Sorient-dens_2VOM.dx", color: "green", isolevel: -0.007}
+    esw:    { file: "gist-ESW-dens_2VOM.dx",     color: "red",   isolevel: -0.007 },
+    strans: { file: "gist-Strans-dens_2VOM.dx",  color: "blue",  isolevel: -0.007 },
+    sorient:{ file: "gist-Sorient-dens_2VOM.dx", color: "green", isolevel: -0.007 }
   };
 
-  var currentSurface;
+  var currentSurface = null;
 
   function showMap(type) {
+    // Remove previous surface
     if (currentSurface) {
       stage.removeComponent(currentSurface);
+      currentSurface = null;
     }
 
+    // Load the selected .dx file
     let config = maps[type];
+    console.log("Loading surface:", config.file);
+
     stage.loadFile(config.file, { defaultRepresentation: false }).then(function(o) {
       currentSurface = o;
       o.addRepresentation("surface", {
@@ -45,9 +52,13 @@
         isolevelType: "value",
         color: config.color,
         opacity: 0.7,
-        useWorker: true,
-        contour: true
+        contour: true,
+        useWorker: false  // safer for small/local files
       });
+      o.autoView();  // recenter view
+    }).catch(function(error) {
+      console.error("Error loading", config.file, error);
+      alert("Failed to load: " + config.file);
     });
   }
 </script>
