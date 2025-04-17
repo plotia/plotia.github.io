@@ -13,7 +13,7 @@
 
 <div id="viewport"></div>
 
-<!-- Buttons to toggle GIST surfaces -->
+<!-- GIST Surface Buttons -->
 <div>
   <button class="btn" onclick="showMap('esw')">Show ESW</button>
   <button class="btn" onclick="hideMap('esw')">Hide ESW</button>
@@ -26,30 +26,27 @@
 <script>
   const stage = new NGL.Stage("viewport");
 
-  // Load PDB and add customized representations
+  // Load PDB and add representations
   stage.loadFile("frame1_2vom.pdb").then(function (comp) {
-    // Add full ribbon for structure
-    comp.addRepresentation("cartoon", {
-      color: "white",
-      sele: "all"
-    });
+    // Keep original ribbon coloring (no color override)
+    comp.addRepresentation("cartoon");
 
     // Yellow licorice for residues 62, 95, 101, 109
     comp.addRepresentation("licorice", {
-      sele: "62,95,101,109",
+      sele: "resi 62 or resi 95 or resi 101 or resi 109",
       color: "yellow"
     });
 
     // Cyan licorice for residues 308, 341, 347, 355
     comp.addRepresentation("licorice", {
-      sele: "308,341,347,355",
+      sele: "resi 308 or resi 341 or resi 347 or resi 355",
       color: "cyan"
     });
 
     comp.autoView();
   });
 
-  // GIST map definitions
+  // GIST surface maps
   const maps = {
     esw: {
       file: "gist-Esw-dens_2VOM.dx",
@@ -71,9 +68,10 @@
     }
   };
 
+  // Show GIST map
   function showMap(type) {
     const map = maps[type];
-    if (map.component !== null) return; // already shown
+    if (map.component !== null) return;
 
     stage.loadFile(map.file, { defaultRepresentation: false }).then(function (comp) {
       map.component = comp;
@@ -91,6 +89,7 @@
     });
   }
 
+  // Hide GIST map
   function hideMap(type) {
     const map = maps[type];
     if (map.component !== null) {
