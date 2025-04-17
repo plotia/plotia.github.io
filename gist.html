@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Visualization</title>
+  <title>GIST Grid Viewer</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 600px; }
@@ -11,59 +11,70 @@
 </head>
 <body>
 
-  <div id="viewport"></div>
-  <button class="btn" onclick="showMap('esw')">Show ESW</button>
-  <button class="btn" onclick="showMap('strans')">Show Strans</button>
-  <button class="btn" onclick="showMap('sorient')">Show Sorient</button>
+<div id="viewport"></div>
+<button class="btn" onclick="showMap('esw')">Show ESW Grid</button>
+<button class="btn" onclick="showMap('strans')">Show Strans Grid</button>
+<button class="btn" onclick="showMap('sorient')">Show Sorient Grid</button>
 
-  <script>
-    // Start NGL stage
-    var stage = new NGL.Stage("viewport");
+<script>
+  const stage = new NGL.Stage("viewport");
 
-    // Load your PDB
-    stage.loadFile("frame1_2vom.pdb").then(function(comp) {
-      comp.addRepresentation("cartoon");
-      comp.autoView();
-    }).catch(function(err) {
-      console.error("PDB load error:", err);
-      alert("Could not load frame1_2vom.pdb");
-    });
+  // Load PDB as licorice
+  stage.loadFile("frame1_2vom.pdb").then(function(comp) {
+    comp.addRepresentation("licorice", { multipleBond: true });
+    comp.autoView();
+  });
 
-    // Map configs matching your uploaded filenames
-    var maps = {
-      esw:    { file: "gist-Esw-dens_2VOM.dx",      color: "red",   isolevel: -0.007 },
-      strans: { file: "gist-dTStrans-dens_2VOM.dx",  color: "blue",  isolevel: 0 },
-      sorient:{ file: "gist-dTSorient-dens_2VOM.dx", color: "green", isolevel: 0 }
-    };
-
-    var currentSurface = null;
-
-    function showMap(type) {
-      // remove old surface
-      if (currentSurface) {
-        stage.removeComponent(currentSurface);
-        currentSurface = null;
-      }
-
-      var cfg = maps[type];
-      console.log("Loading:", cfg.file);
-
-      stage.loadFile(cfg.file, { defaultRepresentation: false }).then(function(comp) {
-        currentSurface = comp;
-        comp.addRepresentation("surface", {
-          isolevel: cfg.isolevel,
-          isolevelType: "value",
-          color: cfg.color,
-          opacity: 0.7,
-          contour: true,
-          useWorker: false
-        });
-        comp.autoView();
-      }).catch(function(err) {
-        console.error("Map load error:", cfg.file, err);
-        alert("Failed to load " + cfg.file + ".\nMake sure it's in OpenDX format and in the same folder.");
-      });
+  // Grid map configuration
+  const maps = {
+    esw: {
+      file: "gist-Esw-dens_2VOM.dx",
+      colorMap: "red-white-blue", // diverging colormap
+      min: -0.01,
+      max:  0.01
+    },
+    strans: {
+      file: "gist-dTStrans-dens_2VOM.dx",
+      colorMap: "blue-red",
+      min: -0.01,
+      max:  0.01
+    },
+    sorient: {
+      file: "gist-dTSorient-dens_2VOM.dx",
+      colorMap: "green",
+      min: -0.01,
+      max:  0.01
     }
-  </script>
+  };
+
+  let currentGrid = null;
+
+  function showMap(type) {
+    // Remove existing grid
+    if (currentGrid) {
+      stage.removeComponent(currentGrid);
+      currentGrid = null;
+    }
+
+    const cfg = maps[type];
+    console.log("Loading grid:", cfg.file);
+
+    stage.loadFile(cfg.file, { defaultRepresentation: false }).then(function(o) {
+      currentGrid = o;
+      o.addRepresentation("volume", {
+        isolevelType: "value",
+        colorScheme: cfg.colorMap,
+        opacity: 0.5,
+        minValue: cfg.min,
+        maxValue: cfg.max,
+        useWorker: false
+      });
+    }).catch(function(err) {
+      console.error("Failed to load:", cfg.file, err);
+      alert("Could not load grid: " + cfg.file);
+    });
+  }
+</script>
+
 </body>
 </html>
