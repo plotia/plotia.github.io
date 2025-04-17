@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Atom Coloring</title>
+  <title>GIST Surface Viewer with Colored Licorice Atoms</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 600px; }
@@ -13,7 +13,7 @@
 
 <div id="viewport"></div>
 
-<!-- Buttons for GIST surfaces -->
+<!-- Buttons to toggle GIST surfaces -->
 <div>
   <button class="btn" onclick="showMap('esw')">Show ESW</button>
   <button class="btn" onclick="hideMap('esw')">Hide ESW</button>
@@ -27,27 +27,33 @@
   const stage = new NGL.Stage("viewport");
 
   stage.loadFile("frame1_2vom.pdb").then(function (comp) {
-    // Add ribbon for the entire protein with default coloring
+    // Keep default coloring for ribbon
     comp.addRepresentation("cartoon");
 
-    // Licorice for selected residues on chain A with yellow carbon
+    // Chain A: residues with yellow carbon, others by element
     comp.addRepresentation("licorice", {
-      sele: "chain A and (resi 62 or resi 95 or resi 101 or resi 109)",
+      sele: "chain A and (resi 62 or resi 95 or resi 101 or resi 109) and element C",
+      color: "yellow"
+    });
+    comp.addRepresentation("licorice", {
+      sele: "chain A and (resi 62 or resi 95 or resi 101 or resi 109) and not element C",
       colorScheme: "element",
       colorValue: {
-        C: "yellow",
         N: "blue",
         O: "red",
         H: "white"
       }
     });
 
-    // Licorice for selected residues on chain B with cyan carbon
+    // Chain B: residues with cyan carbon, others by element
     comp.addRepresentation("licorice", {
-      sele: "chain B and (resi 308 or resi 341 or resi 347 or resi 355)",
+      sele: "chain B and (resi 308 or resi 341 or resi 347 or resi 355) and element C",
+      color: "cyan"
+    });
+    comp.addRepresentation("licorice", {
+      sele: "chain B and (resi 308 or resi 341 or resi 347 or resi 355) and not element C",
       colorScheme: "element",
       colorValue: {
-        C: "cyan",
         N: "blue",
         O: "red",
         H: "white"
