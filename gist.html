@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Visualization</title>
+  <title>GIST Surface Viewer</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 600px; }
@@ -11,59 +11,80 @@
 </head>
 <body>
 
-  <div id="viewport"></div>
+<div id="viewport"></div>
+
+<!-- Show/Hide buttons -->
+<div>
   <button class="btn" onclick="showMap('esw')">Show ESW</button>
+  <button class="btn" onclick="hideMap('esw')">Hide ESW</button>
   <button class="btn" onclick="showMap('strans')">Show Strans</button>
+  <button class="btn" onclick="hideMap('strans')">Hide Strans</button>
   <button class="btn" onclick="showMap('sorient')">Show Sorient</button>
+  <button class="btn" onclick="hideMap('sorient')">Hide Sorient</button>
+</div>
 
-  <script>
-    // Start NGL stage
-    var stage = new NGL.Stage("viewport");
+<script>
+  const stage = new NGL.Stage("viewport");
 
-    // Load your PDB
-    stage.loadFile("frame1_2vom.pdb").then(function(comp) {
-      comp.addRepresentation("cartoon");
-      comp.autoView();
-    }).catch(function(err) {
-      console.error("PDB load error:", err);
-      alert("Could not load frame1_2vom.pdb");
-    });
+  // Load your PDB file as cartoon
+  stage.loadFile("frame1_2vom.pdb").then(function (comp) {
+    comp.addRepresentation("cartoon");
+    comp.autoView();
+  }).catch(function (err) {
+    console.error("PDB load error:", err);
+    alert("Could not load frame1_2vom.pdb");
+  });
 
-    // Map configs matching your uploaded filenames
-    var maps = {
-      esw:    { file: "gist-Esw-dens_2VOM.dx",      color: "red",   isolevel: -0.007 },
-      strans: { file: "gist-dTStrans-dens_2VOM.dx",  color: "blue",  isolevel: -0.007 },
-      sorient:{ file: "gist-dTSorient-dens_2VOM.dx", color: "green", isolevel: -0.007 }
-    };
-
-    var currentSurface = null;
-
-    function showMap(type) {
-      // remove old surface
-      if (currentSurface) {
-        stage.removeComponent(currentSurface);
-        currentSurface = null;
-      }
-
-      var cfg = maps[type];
-      console.log("Loading:", cfg.file);
-
-      stage.loadFile(cfg.file, { defaultRepresentation: false }).then(function(comp) {
-        currentSurface = comp;
-        comp.addRepresentation("surface", {
-          isolevel: cfg.isolevel,
-          isolevelType: "value",
-          color: cfg.color,
-          opacity: 0.7,
-          contour: true,
-          useWorker: false
-        });
-        comp.autoView();
-      }).catch(function(err) {
-        console.error("Map load error:", cfg.file, err);
-        alert("Failed to load " + cfg.file + ".\nMake sure it's in OpenDX format and in the same folder.");
-      });
+  // Map configs
+  const maps = {
+    esw: {
+      file: "gist-Esw-dens_2VOM.dx",
+      color: "red",
+      isolevel: -0.007,
+      component: null
+    },
+    strans: {
+      file: "gist-dTStrans-dens_2VOM.dx",
+      color: "blue",
+      isolevel: -0.007,
+      component: null
+    },
+    sorient: {
+      file: "gist-dTSorient-dens_2VOM.dx",
+      color: "green",
+      isolevel: -0.007,
+      component: null
     }
-  </script>
+  };
+
+  function showMap(type) {
+    const map = maps[type];
+    if (map.component !== null) return; // already shown
+
+    stage.loadFile(map.file, { defaultRepresentation: false }).then(function (comp) {
+      map.component = comp;
+      comp.addRepresentation("surface", {
+        isolevel: map.isolevel,
+        isolevelType: "value",
+        color: map.color,
+        opacity: 0.7,
+        contour: true,
+        useWorker: false
+      });
+    }).catch(function (err) {
+      console.error("Map load error:", map.file, err);
+      alert("Failed to load " + map.file + "\nEnsure it is in OpenDX format and located in the same folder.");
+    });
+  }
+
+  function hideMap(type) {
+    const map = maps[type];
+    if (map.component !== null) {
+      stage.removeComponent(map.component);
+      map.component = null;
+    }
+  }
+</script>
+
 </body>
 </html>
