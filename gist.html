@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Colored Licorice Atoms</title>
+  <title>GIST Surface Viewer with Colored Atoms</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 600px; }
@@ -27,35 +27,36 @@
   const stage = new NGL.Stage("viewport");
 
   stage.loadFile("frame1_2vom.pdb").then(function (comp) {
-    // Keep default coloring for ribbon
+    // Ribbon with default coloring
     comp.addRepresentation("cartoon");
 
-    // Add licorice for yellow-highlighted residues (with atom color)
+    // Yellow licorice for residues in chain A (with atom-specific coloring)
     comp.addRepresentation("licorice", {
-      sele: "resi 62 or resi 95 or resi 101 or resi 109",
+      sele: "(chain A and (resi 62 or resi 95 or resi 101 or resi 109))",
       colorScheme: "element",
       colorValue: {
         H: "white",
         O: "red",
-        N: "blue"
+        N: "blue",
+        C: "yellow"
       }
     });
 
-    // Add licorice for cyan-highlighted residues (also atom colored)
+    // Cyan licorice for residues in chain B (with atom-specific coloring)
     comp.addRepresentation("licorice", {
-      sele: "resi 308 or resi 341 or resi 347 or resi 355",
+      sele: "(chain B and (resi 308 or resi 341 or resi 347 or resi 355))",
       colorScheme: "element",
       colorValue: {
         H: "white",
         O: "red",
-        N: "blue"
+        N: "blue",
+        C: "cyan"
       }
     });
 
     comp.autoView();
   });
 
-  // GIST surface files
   const maps = {
     esw: {
       file: "gist-Esw-dens_2VOM.dx",
