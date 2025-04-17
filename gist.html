@@ -2,37 +2,68 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>NGL Viewer</title>
+  <title>GIST Visualization</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
-    html, body { margin: 0; height: 100%; }
-    #viewport { width: 100%; height: 100vh; }
+    #viewport { width: 100%; height: 600px; }
+    .btn { margin: 5px; padding: 8px 12px; font-size: 14px; }
   </style>
 </head>
 <body>
 
-<div id="viewport"></div>
+  <div id="viewport"></div>
+  <button class="btn" onclick="showMap('esw')">Show ESW</button>
+  <button class="btn" onclick="showMap('strans')">Show Strans</button>
+  <button class="btn" onclick="showMap('sorient')">Show Sorient</button>
 
-<script>
-  var stage = new NGL.Stage("viewport");
+  <script>
+    // Start NGL stage
+    var stage = new NGL.Stage("viewport");
 
-  // Load a PDB file
-  stage.loadFile("frame1_2vom.pdb").then(function(component) {
-    component.addRepresentation("cartoon", { color: "spectrum" });
-    component.autoView();
-  });
-
-  // Load a GIST .dx map
-  stage.loadFile("gist-ESW-dens_2VOM.dx", { defaultRepresentation: false }).then(function(surface) {
-    surface.addRepresentation("surface", {
-      isolevel: -0.007143,
-      isolevelType: "value",
-      opacity: 0.6,
-      color: "red",
-      contour: true
+    // Load your PDB
+    stage.loadFile("frame1_2vom.pdb").then(function(comp) {
+      comp.addRepresentation("cartoon");
+      comp.autoView();
+    }).catch(function(err) {
+      console.error("PDB load error:", err);
+      alert("Could not load frame1_2vom.pdb");
     });
-  });
-</script>
 
+    // Map configs matching your uploaded filenames
+    var maps = {
+      esw:    { file: "gist-Esw-dens_2VOM.dx",      color: "red",   isolevel: -0.007 },
+      strans: { file: "gist-dTStrans-dens_2VOM.dx",  color: "blue",  isolevel: -0.007 },
+      sorient:{ file: "gist-dTSorient-dens_2VOM.dx", color: "green", isolevel: -0.007 }
+    };
+
+    var currentSurface = null;
+
+    function showMap(type) {
+      // remove old surface
+      if (currentSurface) {
+        stage.removeComponent(currentSurface);
+        currentSurface = null;
+      }
+
+      var cfg = maps[type];
+      console.log("Loading:", cfg.file);
+
+      stage.loadFile(cfg.file, { defaultRepresentation: false }).then(function(comp) {
+        currentSurface = comp;
+        comp.addRepresentation("surface", {
+          isolevel: cfg.isolevel,
+          isolevelType: "value",
+          color: cfg.color,
+          opacity: 0.7,
+          contour: true,
+          useWorker: false
+        });
+        comp.autoView();
+      }).catch(function(err) {
+        console.error("Map load error:", cfg.file, err);
+        alert("Failed to load " + cfg.file + ".\nMake sure it's in OpenDX format and in the same folder.");
+      });
+    }
+  </script>
 </body>
 </html>
