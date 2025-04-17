@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Grid Viewer</title>
+  <title>GIST Grid Toggle Viewer</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 600px; }
@@ -12,67 +12,77 @@
 <body>
 
 <div id="viewport"></div>
-<button class="btn" onclick="showMap('esw')">Show ESW Grid</button>
-<button class="btn" onclick="showMap('strans')">Show Strans Grid</button>
-<button class="btn" onclick="showMap('sorient')">Show Sorient Grid</button>
+
+<!-- Toggle buttons -->
+<div>
+  <button class="btn" onclick="showMap('esw')">Show ESW</button>
+  <button class="btn" onclick="hideMap('esw')">Hide ESW</button>
+  <button class="btn" onclick="showMap('strans')">Show Strans</button>
+  <button class="btn" onclick="hideMap('strans')">Hide Strans</button>
+  <button class="btn" onclick="showMap('sorient')">Show Sorient</button>
+  <button class="btn" onclick="hideMap('sorient')">Hide Sorient</button>
+</div>
 
 <script>
   const stage = new NGL.Stage("viewport");
 
-  // Load PDB as licorice
-  stage.loadFile("frame1_2vom.pdb").then(function(comp) {
-    comp.addRepresentation("licorice", { multipleBond: true });
-    comp.autoView();
+  // Load protein as licorice
+  stage.loadFile("frame1_2vom.pdb").then(function (pdb) {
+    pdb.addRepresentation("licorice", { multipleBond: true });
+    pdb.autoView();
   });
 
-  // Grid map configuration
+  // Map configurations
   const maps = {
     esw: {
       file: "gist-Esw-dens_2VOM.dx",
-      colorMap: "red-white-blue", // diverging colormap
+      colorMap: "red-white-blue",
       min: -0.01,
-      max:  0.01
+      max:  0.01,
+      component: null
     },
     strans: {
       file: "gist-dTStrans-dens_2VOM.dx",
       colorMap: "blue-red",
       min: -0.01,
-      max:  0.01
+      max:  0.01,
+      component: null
     },
     sorient: {
       file: "gist-dTSorient-dens_2VOM.dx",
-      colorMap: "green",
+      colorMap: "blue-white-red",
       min: -0.01,
-      max:  0.01
+      max:  0.01,
+      component: null
     }
   };
 
-  let currentGrid = null;
-
+  // Show map function
   function showMap(type) {
-    // Remove existing grid
-    if (currentGrid) {
-      stage.removeComponent(currentGrid);
-      currentGrid = null;
-    }
+    const map = maps[type];
+    if (map.component !== null) return; // already loaded
 
-    const cfg = maps[type];
-    console.log("Loading grid:", cfg.file);
-
-    stage.loadFile(cfg.file, { defaultRepresentation: false }).then(function(o) {
-      currentGrid = o;
-      o.addRepresentation("volume", {
-        isolevelType: "value",
-        colorScheme: cfg.colorMap,
+    stage.loadFile(map.file, { defaultRepresentation: false }).then(function (comp) {
+      map.component = comp;
+      comp.addRepresentation("volume", {
+        colorScheme: map.colorMap,
         opacity: 0.5,
-        minValue: cfg.min,
-        maxValue: cfg.max,
-        useWorker: false
+        min: map.min,
+        max: map.max
       });
-    }).catch(function(err) {
-      console.error("Failed to load:", cfg.file, err);
-      alert("Could not load grid: " + cfg.file);
+    }).catch(err => {
+      console.error("Failed to load map:", map.file, err);
+      alert("Error loading " + map.file);
     });
+  }
+
+  // Hide map function
+  function hideMap(type) {
+    const map = maps[type];
+    if (map.component !== null) {
+      stage.removeComponent(map.component);
+      map.component = null;
+    }
   }
 </script>
 
