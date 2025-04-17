@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Colored Atoms</title>
+  <title>GIST Surface Viewer with Atom Coloring</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 600px; }
@@ -13,7 +13,7 @@
 
 <div id="viewport"></div>
 
-<!-- Buttons to toggle GIST surfaces -->
+<!-- Buttons for GIST surfaces -->
 <div>
   <button class="btn" onclick="showMap('esw')">Show ESW</button>
   <button class="btn" onclick="hideMap('esw')">Hide ESW</button>
@@ -27,30 +27,30 @@
   const stage = new NGL.Stage("viewport");
 
   stage.loadFile("frame1_2vom.pdb").then(function (comp) {
-    // Ribbon with default coloring
+    // Add ribbon for the entire protein with default coloring
     comp.addRepresentation("cartoon");
 
-    // Yellow licorice for residues in chain A (with atom-specific coloring)
+    // Licorice for selected residues on chain A with yellow carbon
     comp.addRepresentation("licorice", {
-      sele: "(chain A and (resi 62 or resi 95 or resi 101 or resi 109))",
+      sele: "chain A and (resi 62 or resi 95 or resi 101 or resi 109)",
       colorScheme: "element",
       colorValue: {
-        H: "white",
-        O: "red",
+        C: "yellow",
         N: "blue",
-        C: "yellow"
+        O: "red",
+        H: "white"
       }
     });
 
-    // Cyan licorice for residues in chain B (with atom-specific coloring)
+    // Licorice for selected residues on chain B with cyan carbon
     comp.addRepresentation("licorice", {
-      sele: "(chain B and (resi 308 or resi 341 or resi 347 or resi 355))",
+      sele: "chain B and (resi 308 or resi 341 or resi 347 or resi 355)",
       colorScheme: "element",
       colorValue: {
-        H: "white",
-        O: "red",
+        C: "cyan",
         N: "blue",
-        C: "cyan"
+        O: "red",
+        H: "white"
       }
     });
 
