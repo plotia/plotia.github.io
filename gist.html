@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer</title>
+  <title>GIST Surface Viewer with Highlighted Residues</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 600px; }
@@ -13,7 +13,7 @@
 
 <div id="viewport"></div>
 
-<!-- Show/Hide buttons -->
+<!-- Buttons to toggle GIST surfaces -->
 <div>
   <button class="btn" onclick="showMap('esw')">Show ESW</button>
   <button class="btn" onclick="hideMap('esw')">Hide ESW</button>
@@ -26,16 +26,30 @@
 <script>
   const stage = new NGL.Stage("viewport");
 
-  // Load your PDB file as cartoon
+  // Load PDB and add customized representations
   stage.loadFile("frame1_2vom.pdb").then(function (comp) {
-    comp.addRepresentation("cartoon");
+    // Add full ribbon for structure
+    comp.addRepresentation("cartoon", {
+      color: "white",
+      sele: "all"
+    });
+
+    // Yellow licorice for residues 62, 95, 101, 109
+    comp.addRepresentation("licorice", {
+      sele: "62,95,101,109",
+      color: "yellow"
+    });
+
+    // Cyan licorice for residues 308, 341, 347, 355
+    comp.addRepresentation("licorice", {
+      sele: "308,341,347,355",
+      color: "cyan"
+    });
+
     comp.autoView();
-  }).catch(function (err) {
-    console.error("PDB load error:", err);
-    alert("Could not load frame1_2vom.pdb");
   });
 
-  // Map configs
+  // GIST map definitions
   const maps = {
     esw: {
       file: "gist-Esw-dens_2VOM.dx",
@@ -73,7 +87,7 @@
       });
     }).catch(function (err) {
       console.error("Map load error:", map.file, err);
-      alert("Failed to load " + map.file + "\nEnsure it is in OpenDX format and located in the same folder.");
+      alert("Failed to load " + map.file);
     });
   }
 
