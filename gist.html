@@ -30,39 +30,34 @@
     // Keep default coloring for ribbon
     comp.addRepresentation("cartoon");
 
-    // Chain A: residues with yellow carbon, others by element
+    // Add licorice for yellow-highlighted residues (with atom color)
     comp.addRepresentation("licorice", {
-      sele: "chain A and (resi 62 or resi 95 or resi 101 or resi 109) and element C",
-      color: "yellow"
-    });
-    comp.addRepresentation("licorice", {
-      sele: "chain A and (resi 62 or resi 95 or resi 101 or resi 109) and not element C",
+      sele: "resi 62 or resi 95 or resi 101 or resi 109",
       colorScheme: "element",
       colorValue: {
-        N: "blue",
+        C: "cyan",
+        H: "white",
         O: "red",
-        H: "white"
+        N: "blue"
       }
     });
 
-    // Chain B: residues with cyan carbon, others by element
+    // Add licorice for cyan-highlighted residues (also atom colored)
     comp.addRepresentation("licorice", {
-      sele: "chain B and (resi 308 or resi 341 or resi 347 or resi 355) and element C",
-      color: "cyan"
-    });
-    comp.addRepresentation("licorice", {
-      sele: "chain B and (resi 308 or resi 341 or resi 347 or resi 355) and not element C",
+      sele: "resi 308 or resi 341 or resi 347 or resi 355",
       colorScheme: "element",
       colorValue: {
-        N: "blue",
+        C: "yellow",
+        H: "white",
         O: "red",
-        H: "white"
+        N: "blue"
       }
     });
 
     comp.autoView();
   });
 
+  // GIST surface files
   const maps = {
     esw: {
       file: "gist-Esw-dens_2VOM.dx",
