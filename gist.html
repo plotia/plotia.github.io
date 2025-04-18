@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Aligned PDBs v1.1</title>
+  <title>GIST Surface Viewer with Aligned PDBs</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 1000px; }
@@ -35,8 +35,8 @@
     pdbComponents.jk2 = components[1];
 
     // Add representations
-    pdbComponents.vom.addRepresentation("cartoon");
-    pdbComponents.jk2.addRepresentation("cartoon", { color: "skyblue"});
+    pdbComponents.vom.addRepresentation("cartoon", { color: "skyblue" });
+    pdbComponents.jk2.addRepresentation("cartoon", { color: "orange" });
 
     // Highlight residues on vom
     pdbComponents.vom.addRepresentation("licorice", {
@@ -60,7 +60,7 @@
     if (comp) {
       const visible = comp.visible;
       comp.setVisibility(!visible);
-      btn.textContent = ${visible ? "Show" : "Hide"} ${key === 'vom' ? '2vom' : '2jk2'};
+      btn.textContent = `${visible ? "Show" : "Hide"} ${key === 'vom' ? '2vom' : '2jk2'}`;
     }
   }
 
@@ -102,7 +102,7 @@
           contour: true,
           useWorker: false
         });
-        btn.textContent = Hide ${capitalize(type)};
+        btn.textContent = `Hide ${capitalize(type)}`;
       }).catch(function (err) {
         console.error("Map load error:", map.file, err);
         alert("Failed to load " + map.file);
@@ -110,7 +110,7 @@
     } else {
       stage.removeComponent(map.component);
       map.component = null;
-      btn.textContent = Show ${capitalize(type)};
+      btn.textContent = `Show ${capitalize(type)}`;
     }
   }
 
