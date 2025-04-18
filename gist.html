@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Colored Licorice Atoms</title>
+  <title>GIST Surface Viewer with Toggle Buttons</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 1000px; }
@@ -13,16 +13,12 @@
 
 <div id="viewport"></div>
 
-<!-- Buttons to toggle GIST surfaces -->
+<!-- Toggle Buttons -->
 <div>
-  <button class="btn" onclick="showPDB()">Show PDB</button>
-  <button class="btn" onclick="hidePDB()">Hide PDB</button>
-  <button class="btn" onclick="showMap('esw')">Show ESW</button>
-  <button class="btn" onclick="hideMap('esw')">Hide ESW</button>
-  <button class="btn" onclick="showMap('strans')">Show Strans</button>
-  <button class="btn" onclick="hideMap('strans')">Hide Strans</button>
-  <button class="btn" onclick="showMap('sorient')">Show Sorient</button>
-  <button class="btn" onclick="hideMap('sorient')">Hide Sorient</button>
+  <button class="btn" id="pdbBtn" onclick="togglePDB()">Hide PDB</button>
+  <button class="btn" id="eswBtn" onclick="toggleMap('esw')">Show ESW</button>
+  <button class="btn" id="stransBtn" onclick="toggleMap('strans')">Show Strans</button>
+  <button class="btn" id="sorientBtn" onclick="toggleMap('sorient')">Show Sorient</button>
 </div>
 
 <script>
@@ -31,88 +27,82 @@
 
   stage.loadFile("frame1_2vom.pdb").then(function (comp) {
     pdbComponent = comp;
-    
     comp.addRepresentation("cartoon");
 
-    // Add licorice for yellow-highlighted residues (with atom color)
     comp.addRepresentation("licorice", {
       sele: "resi 62 or resi 95 or resi 101 or resi 109",
-      colorScheme: "element",
-      colorValue: {
-        H: "white",
-        O: "red",
-        N: "blue"
-      }
+      colorScheme: "element"
     });
 
-    // Add licorice for cyan-highlighted residues (also atom colored)
     comp.addRepresentation("licorice", {
       sele: "resi 308 or resi 341 or resi 347 or resi 355",
-      colorScheme: "element",
-      colorValue: {
-        H: "white",
-        O: "red",
-        N: "blue"
-      }
+      colorScheme: "element"
     });
 
     comp.autoView();
   });
-function showPDB() {
-  if (pdbComponent) pdbComponent.setVisibility(true);
-}
 
-function hidePDB() {
-  if (pdbComponent) pdbComponent.setVisibility(false);
-}
-  // GIST surface files
+  function togglePDB() {
+    const btn = document.getElementById("pdbBtn");
+    if (pdbComponent) {
+      const visible = pdbComponent.visible;
+      pdbComponent.setVisibility(!visible);
+      btn.textContent = visible ? "Show PDB" : "Hide PDB";
+    }
+  }
+
   const maps = {
     esw: {
       file: "gist-Esw-dens_2VOM.dx",
       color: "red",
       isolevel: -0.007,
-      component: null
+      component: null,
+      btnId: "eswBtn"
     },
     strans: {
       file: "gist-dTStrans-dens_2VOM.dx",
       color: "blue",
       isolevel: -0.007,
-      component: null
+      component: null,
+      btnId: "stransBtn"
     },
     sorient: {
       file: "gist-dTSorient-dens_2VOM.dx",
       color: "green",
       isolevel: -0.007,
-      component: null
+      component: null,
+      btnId: "sorientBtn"
     }
   };
 
-  function showMap(type) {
+  function toggleMap(type) {
     const map = maps[type];
-    if (map.component !== null) return;
-
-    stage.loadFile(map.file, { defaultRepresentation: false }).then(function (comp) {
-      map.component = comp;
-      comp.addRepresentation("surface", {
-        isolevel: map.isolevel,
-        isolevelType: "value",
-        color: map.color,
-        opacity: 0.7,
-        contour: true,
-        useWorker: false
+    const btn = document.getElementById(map.btnId);
+    if (map.component === null) {
+      stage.loadFile(map.file, { defaultRepresentation: false }).then(function (comp) {
+        map.component = comp;
+        comp.addRepresentation("surface", {
+          isolevel: map.isolevel,
+          isolevelType: "value",
+          color: map.color,
+          opacity: 0.7,
+          contour: true,
+          useWorker: false
+        });
+        btn.textContent = `Hide ${capitalize(type)}`;
+      }).catch(function (err) {
+        console.error("Map load error:", map.file, err);
+        alert("Failed to load " + map.file);
       });
-    }).catch(function (err) {
-      console.error("Map load error:", map.file, err);
-      alert("Failed to load " + map.file);
-    });
-  }
-
-  function hideMap(type) {
-    const map = maps[type];
-    if (map.component !== null) {
+    } else {
       stage.removeComponent(map.component);
       map.component = null;
+      btn.textContent = `Show ${capitalize(type)}`;
     }
+  }
+
+  function capitalize(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
   }
 </script>
 
