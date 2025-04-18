@@ -35,22 +35,12 @@
     // Cartoon (default color)
     comp.addRepresentation("cartoon");
 
-    // Yellow-highlighted licorice residues (chain A carbons = yellow)
-    comp.addRepresentation("licorice", {
-      sele: "chain A and (resi 62 or resi 95 or resi 101 or resi 109) and element C",
-      color: "yellow"
-    });
     comp.addRepresentation("licorice", {
       sele: "chain A and (resi 62 or resi 95 or resi 101 or resi 109) and not element C",
       colorScheme: "element",
       colorValue: { H: "white", O: "red", N: "blue" }
     });
-
-    // Cyan-highlighted licorice residues (chain B carbons = cyan)
-    comp.addRepresentation("licorice", {
-      sele: "chain B and (resi 308 or resi 341 or resi 347 or resi 355) and element C",
-      color: "cyan"
-    });
+    
     comp.addRepresentation("licorice", {
       sele: "chain B and (resi 308 or resi 341 or resi 347 or resi 355) and not element C",
       colorScheme: "element",
