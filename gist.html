@@ -5,7 +5,7 @@
   <title>GIST Surface Viewer with Colored Licorice Atoms</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
-    #viewport { width: 100%; height: 600px; }
+    #viewport { width: 100%; height: 1000px; }
     .btn { margin: 5px; padding: 8px 12px; font-size: 14px; }
   </style>
 </head>
@@ -15,6 +15,8 @@
 
 <!-- Buttons to toggle GIST surfaces -->
 <div>
+  <button class="btn" onclick="showPDB()">Show PDB</button>
+  <button class="btn" onclick="hidePDB()">Hide PDB</button>
   <button class="btn" onclick="showMap('esw')">Show ESW</button>
   <button class="btn" onclick="hideMap('esw')">Hide ESW</button>
   <button class="btn" onclick="showMap('strans')">Show Strans</button>
@@ -25,9 +27,11 @@
 
 <script>
   const stage = new NGL.Stage("viewport");
+  let pdbComponent = null;
 
   stage.loadFile("frame1_2vom.pdb").then(function (comp) {
-    // Keep default coloring for ribbon
+    pdbComponent = comp;
+    
     comp.addRepresentation("cartoon");
 
     // Add licorice for yellow-highlighted residues (with atom color)
@@ -54,7 +58,13 @@
 
     comp.autoView();
   });
+function showPDB() {
+  if (pdbComponent) pdbComponent.setVisibility(true);
+}
 
+function hidePDB() {
+  if (pdbComponent) pdbComponent.setVisibility(false);
+}
   // GIST surface files
   const maps = {
     esw: {
