@@ -27,27 +27,37 @@
   const stage = new NGL.Stage("viewport");
 
   stage.loadFile("frame1_2vom.pdb").then(function (comp) {
-    // Keep default coloring for ribbon
+    // Keep default cartoon ribbon coloring
     comp.addRepresentation("cartoon");
 
-    // Add licorice for yellow-highlighted residues (with atom color)
+    // ==== CHAIN A residues with yellow carbons ====
+    // Carbon atoms only
     comp.addRepresentation("licorice", {
-      sele: "resi 62 or resi 95 or resi 101 or resi 109",
+      sele: "chain A and (resi 62 or resi 95 or resi 101 or resi 109) and element C",
+      color: "yellow"
+    });
+    // Non-carbon atoms (colored by element)
+    comp.addRepresentation("licorice", {
+      sele: "chain A and (resi 62 or resi 95 or resi 101 or resi 109) and not element C",
       colorScheme: "element",
       colorValue: {
-        C: "cyan",
         H: "white",
         O: "red",
         N: "blue"
       }
     });
 
-    // Add licorice for cyan-highlighted residues (also atom colored)
+    // ==== CHAIN B residues with cyan carbons ====
+    // Carbon atoms only
     comp.addRepresentation("licorice", {
-      sele: "resi 308 or resi 341 or resi 347 or resi 355",
+      sele: "chain B and (resi 308 or resi 341 or resi 347 or resi 355) and element C",
+      color: "cyan"
+    });
+    // Non-carbon atoms (colored by element)
+    comp.addRepresentation("licorice", {
+      sele: "chain B and (resi 308 or resi 341 or resi 347 or resi 355) and not element C",
       colorScheme: "element",
       colorValue: {
-        C: "yellow",
         H: "white",
         O: "red",
         N: "blue"
