@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Aligned PDBs v1.3</title>
+  <title>GIST Surface Viewer with Aligned PDBs v1.2</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 1000px; }
@@ -30,15 +30,14 @@
     stage.loadFile("frame1_2vom.pdb", { defaultRepresentation: false }),
     stage.loadFile("frame1_2jk2.pdb", { defaultRepresentation: false })
   ]).then(function (components) {
-    // Assign components
     pdbComponents.vom = components[0];
     pdbComponents.jk2 = components[1];
 
-    // Add representations
-    pdbComponents.vom.addRepresentation("cartoon");
-    pdbComponents.jk2.addRepresentation("cartoon", { color: "orange"});
+    // Add cartoon representations
+    pdbComponents.vom.addRepresentation("cartoon", { color: "skyblue" });
+    pdbComponents.jk2.addRepresentation("cartoon", { color: "orange" });
 
-    // Highlight residues on vom
+    // Highlight residues on 2vom
     pdbComponents.vom.addRepresentation("licorice", {
       sele: "resi 62 or resi 95 or resi 101 or resi 109",
       colorScheme: "element"
@@ -48,8 +47,15 @@
       colorScheme: "element"
     });
 
-    // Align 2jk2 to 2vom using backbone atoms
-    pdbComponents.vom.superpose(pdbComponents.jk2, true, "backbone", "backbone");
+    // Align chain A of 2jk2 to chain A of 2vom
+    const refA = pdbComponents.vom.structure.getView(new NGL.Selection("chain A and backbone"));
+    const movA = pdbComponents.jk2.structure.getView(new NGL.Selection("chain A and backbone"));
+    movA.superpose(refA);
+
+    // Align chain B of 2jk2 to chain B of 2vom
+    const refB = pdbComponents.vom.structure.getView(new NGL.Selection("chain B and backbone"));
+    const movB = pdbComponents.jk2.structure.getView(new NGL.Selection("chain B and backbone"));
+    movB.superpose(refB);
 
     stage.autoView();
   });
@@ -60,7 +66,7 @@
     if (comp) {
       const visible = comp.visible;
       comp.setVisibility(!visible);
-      btn.textContent = ${visible ? "Show" : "Hide"} ${key === 'vom' ? '2vom' : '2jk2'};
+      btn.textContent = `${visible ? "Show" : "Hide"} ${key === 'vom' ? '2vom' : '2jk2'}`;
     }
   }
 
@@ -102,7 +108,7 @@
           contour: true,
           useWorker: false
         });
-        btn.textContent = Hide ${capitalize(type)};
+        btn.textContent = `Hide ${capitalize(type)}`;
       }).catch(function (err) {
         console.error("Map load error:", map.file, err);
         alert("Failed to load " + map.file);
@@ -110,7 +116,7 @@
     } else {
       stage.removeComponent(map.component);
       map.component = null;
-      btn.textContent = Show ${capitalize(type)};
+      btn.textContent = `Show ${capitalize(type)}`;
     }
   }
 
