@@ -13,8 +13,10 @@
 
 <div id="viewport"></div>
 
-<!-- Buttons to toggle GIST surfaces -->
+<!-- Buttons to toggle PDB and GIST surfaces -->
 <div>
+  <button class="btn" onclick="showPDB()">Show PDB</button>
+  <button class="btn" onclick="hidePDB()">Hide PDB</button>
   <button class="btn" onclick="showMap('esw')">Show ESW</button>
   <button class="btn" onclick="hideMap('esw')">Hide ESW</button>
   <button class="btn" onclick="showMap('strans')">Show Strans</button>
@@ -25,35 +27,46 @@
 
 <script>
   const stage = new NGL.Stage("viewport");
+  let pdbComponent = null;
 
   stage.loadFile("frame1_2vom.pdb").then(function (comp) {
-    // Keep default coloring for ribbon
+    pdbComponent = comp;
+
+    // Cartoon (default color)
     comp.addRepresentation("cartoon");
 
-    // Add licorice for yellow-highlighted residues (with atom color)
+    // Yellow-highlighted licorice residues (chain A carbons = yellow)
     comp.addRepresentation("licorice", {
-      sele: "resi 62 or resi 95 or resi 101 or resi 109",
+      sele: "chain A and (resi 62 or resi 95 or resi 101 or resi 109) and element C",
+      color: "yellow"
+    });
+    comp.addRepresentation("licorice", {
+      sele: "chain A and (resi 62 or resi 95 or resi 101 or resi 109) and not element C",
       colorScheme: "element",
-      colorValue: {
-        H: "white",
-        O: "red",
-        N: "blue",
-      }
+      colorValue: { H: "white", O: "red", N: "blue" }
     });
 
-    // Add licorice for cyan-highlighted residues (also atom colored)
+    // Cyan-highlighted licorice residues (chain B carbons = cyan)
     comp.addRepresentation("licorice", {
-      sele: "resi 308 or resi 341 or resi 347 or resi 355",
+      sele: "chain B and (resi 308 or resi 341 or resi 347 or resi 355) and element C",
+      color: "cyan"
+    });
+    comp.addRepresentation("licorice", {
+      sele: "chain B and (resi 308 or resi 341 or resi 347 or resi 355) and not element C",
       colorScheme: "element",
-      colorValue: {
-        H: "white",
-        O: "red",
-        N: "blue"
-      }
+      colorValue: { H: "white", O: "red", N: "blue" }
     });
 
     comp.autoView();
   });
+
+  function showPDB() {
+    if (pdbComponent) pdbComponent.setVisibility(true);
+  }
+
+  function hidePDB() {
+    if (pdbComponent) pdbComponent.setVisibility(false);
+  }
 
   // GIST surface files
   const maps = {
