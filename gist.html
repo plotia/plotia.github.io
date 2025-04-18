@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Aligned PDBs</title>
+  <title>GIST Surface Viewer with Aligned PDBs v1</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 1000px; }
@@ -35,7 +35,7 @@
     pdbComponents.jk2 = components[1];
 
     // Add representations
-    pdbComponents.vom.addRepresentation("cartoon", { color: "skyblue" });
+    pdbComponents.vom.addRepresentation("cartoon");
     pdbComponents.jk2.addRepresentation("cartoon", { color: "orange" });
 
     // Highlight residues on vom
