@@ -33,11 +33,11 @@
     pdbComponents.vom = components[0];
     pdbComponents.jk2 = components[1];
 
-    // Add cartoon representations
-    pdbComponents.vom.addRepresentation("cartoon", { color: "skyblue" });
+    // Add representations
+    pdbComponents.vom.addRepresentation("cartoon");
     pdbComponents.jk2.addRepresentation("cartoon", { color: "orange" });
 
-    // Highlight residues on 2vom
+    // Highlight residues on vom
     pdbComponents.vom.addRepresentation("licorice", {
       sele: "resi 62 or resi 95 or resi 101 or resi 109",
       colorScheme: "element"
@@ -57,6 +57,7 @@
     const movB = pdbComponents.jk2.structure.getView(new NGL.Selection("chain B and backbone"));
     movB.superpose(refB);
 
+    // Center the view after alignment
     stage.autoView();
   });
 
