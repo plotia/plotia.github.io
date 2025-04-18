@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Aligned PDBs v1.2.2</title>
+  <title>GIST Surface Viewer with Aligned PDBs v1.2.1</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 1000px; }
@@ -36,8 +36,16 @@
 
     // Add representations
     pdbComponents.vom.addRepresentation("cartoon");
-    pdbComponents.jk2.addRepresentation("cartoon", { sele: "chain A", color: "orange" });
-    pdbComponents.jk2.addRepresentation("cartoon", { sele: "chain B", color: "skyblue" });
+
+    // Chain-specific coloring for 2jk2
+    pdbComponents.jk2.addRepresentation("cartoon", {
+      sele: "chain A",
+      color: "skyblue"
+    });
+    pdbComponents.jk2.addRepresentation("cartoon", {
+      sele: "chain B",
+      color: "green"
+    });
 
     // Highlight residues on vom
     pdbComponents.vom.addRepresentation("licorice", {
