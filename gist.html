@@ -57,6 +57,16 @@
       colorScheme: "element"
     });
 
+    // Highlight residues on 2jk2
+    pdbComponents.jk2.addRepresentation("licorice", {
+      sele: "resi 62 or resi 95 or resi 101 or resi 109",
+      color: "yellow"
+    });
+    pdbComponents.jk2.addRepresentation("licorice", {
+      sele: "resi 308 or resi 341 or resi 347 or resi 355",
+      color: "cyan"
+    });
+
     // Align 2jk2 to 2vom using backbone atoms
     pdbComponents.vom.superpose(pdbComponents.jk2, true, "name CA", "name CA");
 
