@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Aligned PDBs v1.2.1</title>
+  <title>GIST Surface Viewer with Aligned PDBs v1.2.2</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 1000px; }
@@ -15,11 +15,17 @@
 
 <!-- Toggle Buttons -->
 <div>
+  <!-- 2vom buttons -->
   <button class="btn" id="vomBtn" onclick="togglePDB('vom')">Hide 2vom</button>
-  <button class="btn" id="jk2Btn" onclick="togglePDB('jk2')">Hide 2jk2</button>
   <button class="btn" id="eswBtn" onclick="toggleMap('esw')">Show ESW</button>
   <button class="btn" id="stransBtn" onclick="toggleMap('strans')">Show Strans</button>
   <button class="btn" id="sorientBtn" onclick="toggleMap('sorient')">Show Sorient</button>
+
+  <!-- 2jk2 buttons -->
+  <button class="btn" id="jk2Btn" onclick="togglePDB('jk2')">Hide 2jk2</button>
+  <button class="btn" id="esw_jk2Btn" onclick="toggleMap('esw_jk2')">Show ESW (2jk2)</button>
+  <button class="btn" id="strans_jk2Btn" onclick="toggleMap('strans_jk2')">Show Strans (2jk2)</button>
+  <button class="btn" id="sorient_jk2Btn" onclick="toggleMap('sorient_jk2')">Show Sorient (2jk2)</button>
 </div>
 
 <script>
@@ -30,19 +36,12 @@
     stage.loadFile("frame1_2vom.pdb", { defaultRepresentation: false }),
     stage.loadFile("frame1_2jk2.pdb", { defaultRepresentation: false })
   ]).then(function (components) {
-    // Assign components
     pdbComponents.vom = components[0];
     pdbComponents.jk2 = components[1];
 
-    // Add representations
     pdbComponents.vom.addRepresentation("cartoon");
+    pdbComponents.jk2.addRepresentation("cartoon", { color: "skyblue" });
 
-    // Chain-specific coloring for 2jk2
-    pdbComponents.jk2.addRepresentation("cartoon", {
-      color: "skyblue"
-    });
-
-    // Highlight residues on vom
     pdbComponents.vom.addRepresentation("licorice", {
       sele: "resi 62 or resi 95 or resi 101 or resi 109",
       colorScheme: "element"
@@ -52,7 +51,6 @@
       colorScheme: "element"
     });
 
-    // Highlight residues on 2jk2
     pdbComponents.jk2.addRepresentation("licorice", {
       sele: "resi 62 or resi 95 or resi 101 or resi 109",
       color: "green"
@@ -62,9 +60,7 @@
       color: "yellow"
     });
 
-    // Align 2jk2 to 2vom using backbone atoms
     pdbComponents.vom.superpose(pdbComponents.jk2, true, "name CA", "name CA");
-
     stage.autoView();
   });
 
@@ -99,6 +95,27 @@
       isolevel: -0.007,
       component: null,
       btnId: "sorientBtn"
+    },
+    esw_jk2: {
+      file: "gist-Esw-dens.dx",
+      color: "red",
+      isolevel: -0.007,
+      component: null,
+      btnId: "esw_jk2Btn"
+    },
+    strans_jk2: {
+      file: "gist-dTStrans-dens.dx",
+      color: "blue",
+      isolevel: -0.007,
+      component: null,
+      btnId: "strans_jk2Btn"
+    },
+    sorient_jk2: {
+      file: "gist-dTSorient-dens.dx",
+      color: "green",
+      isolevel: -0.007,
+      component: null,
+      btnId: "sorient_jk2Btn"
     }
   };
 
@@ -116,7 +133,7 @@
           contour: true,
           useWorker: false
         });
-        btn.textContent = `Hide ${capitalize(type)}`;
+        btn.textContent = `Hide ${btn.textContent.replace("Show ", "")}`;
       }).catch(function (err) {
         console.error("Map load error:", map.file, err);
         alert("Failed to load " + map.file);
@@ -124,12 +141,8 @@
     } else {
       stage.removeComponent(map.component);
       map.component = null;
-      btn.textContent = `Show ${capitalize(type)}`;
+      btn.textContent = `Show ${btn.textContent.replace("Hide ", "")}`;
     }
-  }
-
-  function capitalize(word) {
-    return word.charAt(0).toUpperCase() + word.slice(1);
   }
 </script>
 
