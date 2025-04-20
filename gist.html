@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Aligned PDBs v1.2.2.2</title>
+  <title>GIST Surface Viewer with Aligned PDBs v1.2.1</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 1000px; }
@@ -15,11 +15,14 @@
 
 <!-- Toggle Buttons -->
 <div>
+  <!-- 2vom buttons -->
   <button class="btn" id="vomBtn" onclick="togglePDB('vom')">Hide 2VOM</button>
   <button class="btn" id="eswBtn" onclick="toggleMap('esw')">Show ESW (2VOM)</button>
   <button class="btn" id="stransBtn" onclick="toggleMap('strans')">Show Strans (2VOM)</button>
   <button class="btn" id="sorientBtn" onclick="toggleMap('sorient')">Show Sorient (2VOM)</button>
-  <button class="btn" id="jk2Btn" onclick="togglePDB('jk2')">Hide (2JK2)</button>
+
+  <!-- 2jk2 buttons -->
+  <button class="btn" id="jk2Btn" onclick="togglePDB('jk2')">Hide 2JK2</button>
   <button class="btn" id="esw_jk2Btn" onclick="toggleMap('esw_jk2')">Show ESW (2JK2)</button>
   <button class="btn" id="strans_jk2Btn" onclick="toggleMap('strans_jk2')">Show Strans (2JK2)</button>
   <button class="btn" id="sorient_jk2Btn" onclick="toggleMap('sorient_jk2')">Show Sorient (2JK2)</button>
@@ -58,13 +61,6 @@
     });
 
     pdbComponents.vom.superpose(pdbComponents.jk2, true, "name CA", "name CA");
-
-    // ✅ ADDING A SPHERE AT (0,0,0)
-    const shape = new NGL.Shape("highlight");
-    shape.addSphere([40, 40, 40], "lime", 10.0); // (position, color, radius)
-    const shapeComp = stage.addComponentFromObject(shape);
-    shapeComp.addRepresentation("buffer");
-
     stage.autoView();
   });
 
@@ -74,17 +70,53 @@
     if (comp) {
       const visible = comp.visible;
       comp.setVisibility(!visible);
-      btn.textContent = `${visible ? "Show" : "Hide"} ${key === 'vom' ? '2vom' : '2jk2'}`;
+      btn.textContent = ${visible ? "Show" : "Hide"} ${key === 'vom' ? '2vom' : '2jk2'};
     }
   }
 
   const maps = {
-    esw: { file: "gist-Esw-dens_2VOM.dx", color: "red", isolevel: -0.007, component: null, btnId: "eswBtn" },
-    strans: { file: "gist-dTStrans-dens_2VOM.dx", color: "blue", isolevel: -0.007, component: null, btnId: "stransBtn" },
-    sorient: { file: "gist-dTSorient-dens_2VOM.dx", color: "green", isolevel: -0.007, component: null, btnId: "sorientBtn" },
-    esw_jk2: { file: "gist-Esw-dens.dx", color: "cyan", isolevel: -0.007, component: null, btnId: "esw_jk2Btn" },
-    strans_jk2: { file: "gist-dTStrans-dens.dx", color: "white", isolevel: -0.007, component: null, btnId: "strans_jk2Btn" },
-    sorient_jk2: { file: "gist-dTSorient-dens.dx", color: "red", isolevel: -0.007, component: null, btnId: "sorient_jk2Btn" }
+    esw: {
+      file: "gist-Esw-dens_2VOM.dx",
+      color: "red",
+      isolevel: -0.007,
+      component: null,
+      btnId: "eswBtn"
+    },
+    strans: {
+      file: "gist-dTStrans-dens_2VOM.dx",
+      color: "blue",
+      isolevel: -0.007,
+      component: null,
+      btnId: "stransBtn"
+    },
+    sorient: {
+      file: "gist-dTSorient-dens_2VOM.dx",
+      color: "green",
+      isolevel: -0.007,
+      component: null,
+      btnId: "sorientBtn"
+    },
+    esw_jk2: {
+      file: "gist-Esw-dens.dx",
+      color: "pink",
+      isolevel: -0.007,
+      component: null,
+      btnId: "esw_jk2Btn"
+    },
+    strans_jk2: {
+      file: "gist-dTStrans-dens.dx",
+      color: "cyan",
+      isolevel: -0.007,
+      component: null,
+      btnId: "strans_jk2Btn"
+    },
+    sorient_jk2: {
+      file: "gist-dTSorient-dens.dx",
+      color: "lime",
+      isolevel: -0.007,
+      component: null,
+      btnId: "sorient_jk2Btn"
+    }
   };
 
   function toggleMap(type) {
@@ -101,7 +133,7 @@
           contour: true,
           useWorker: false
         });
-        btn.textContent = `Hide ${btn.textContent.replace("Show ", "")}`;
+        btn.textContent = Hide ${btn.textContent.replace("Show ", "")};
       }).catch(function (err) {
         console.error("Map load error:", map.file, err);
         alert("Failed to load " + map.file);
@@ -109,7 +141,7 @@
     } else {
       stage.removeComponent(map.component);
       map.component = null;
-      btn.textContent = `Show ${btn.textContent.replace("Hide ", "")}`;
+      btn.textContent = Show ${btn.textContent.replace("Hide ", "")};
     }
   }
 </script>
