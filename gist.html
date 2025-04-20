@@ -5,7 +5,7 @@
   <title>GIST Surface Viewer with Aligned PDBs v10.2.1</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
-    #viewport { width: 100%; height: 1000px; }
+    #viewport { width: 100%; height: 500px; }
     .btn { margin: 5px; padding: 8px 12px; font-size: 14px; }
   </style>
 </head>
@@ -16,16 +16,16 @@
 <!-- Toggle Buttons -->
 <div>
   <!-- 2vom buttons -->
-  <button class="btn" id="vomBtn" onclick="togglePDB('vom')">Hide 2vom</button>
-  <button class="btn" id="eswBtn" onclick="toggleMap('esw')">Show ESW</button>
-  <button class="btn" id="stransBtn" onclick="toggleMap('strans')">Show Strans</button>
-  <button class="btn" id="sorientBtn" onclick="toggleMap('sorient')">Show Sorient</button>
+  <button class="btn" id="vomBtn" onclick="togglePDB('vom')">Hide 2VOM</button>
+  <button class="btn" id="eswBtn" onclick="toggleMap('esw')">Show ESW (2VOM)</button>
+  <button class="btn" id="stransBtn" onclick="toggleMap('strans')">Show Strans (2VOM)</button>
+  <button class="btn" id="sorientBtn" onclick="toggleMap('sorient')">Show Sorient (2VOM)</button>
 
   <!-- 2jk2 buttons -->
-  <button class="btn" id="jk2Btn" onclick="togglePDB('jk2')">Hide 2jk2</button>
-  <button class="btn" id="esw_jk2Btn" onclick="toggleMap('esw_jk2')">Show ESW (2jk2)</button>
-  <button class="btn" id="strans_jk2Btn" onclick="toggleMap('strans_jk2')">Show Strans (2jk2)</button>
-  <button class="btn" id="sorient_jk2Btn" onclick="toggleMap('sorient_jk2')">Show Sorient (2jk2)</button>
+  <button class="btn" id="jk2Btn" onclick="togglePDB('jk2')">Hide 2JK2</button>
+  <button class="btn" id="esw_jk2Btn" onclick="toggleMap('esw_jk2')">Show ESW (2JK2)</button>
+  <button class="btn" id="strans_jk2Btn" onclick="toggleMap('strans_jk2')">Show Strans (2JK2)</button>
+  <button class="btn" id="sorient_jk2Btn" onclick="toggleMap('sorient_jk2')">Show Sorient (2JK2)</button>
 </div>
 
 <script>
@@ -98,21 +98,21 @@
     },
     esw_jk2: {
       file: "gist-Esw-dens.dx",
-      color: "red",
+      color: "pink",
       isolevel: -0.007,
       component: null,
       btnId: "esw_jk2Btn"
     },
     strans_jk2: {
       file: "gist-dTStrans-dens.dx",
-      color: "blue",
+      color: "cyan",
       isolevel: -0.007,
       component: null,
       btnId: "strans_jk2Btn"
     },
     sorient_jk2: {
       file: "gist-dTSorient-dens.dx",
-      color: "green",
+      color: "yellow",
       isolevel: -0.007,
       component: null,
       btnId: "sorient_jk2Btn"
