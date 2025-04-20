@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Aligned PDBs v1.2.2</title>
+  <title>GIST Surface Viewer with Aligned PDBs v1.2.2.1</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 1000px; }
@@ -61,7 +61,7 @@
 
     // ✅ ADDING A SPHERE AT (0,0,0)
     const shape = new NGL.Shape("highlight");
-    shape.addSphere([0, 0, 0], "lime", 1.0); // (position, color, radius)
+    shape.addSphere([40, 40, 40], "lime", 1.0); // (position, color, radius)
     const shapeComp = stage.addComponentFromObject(shape);
     shapeComp.addRepresentation("buffer");
 
