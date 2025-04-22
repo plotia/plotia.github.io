@@ -61,6 +61,13 @@
     });
 
     pdbComponents.vom.superpose(pdbComponents.jk2, true, "name CA", "name CA");
+
+    // Add lime sphere at (40, 40, 40)
+    const shape = new NGL.Shape("highlightSphere");
+    shape.addSphere([40, 40, 40], [0, 1, 0], 1.5);  // lime = [0, 1, 0]
+
+    stage.addComponentFromObject(shape).addRepresentation("buffer");
+
     stage.autoView();
   });
 
