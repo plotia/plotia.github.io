@@ -26,23 +26,36 @@
 
 <!-- Toggle Buttons -->
 <div>
-  <!-- 2vom buttons -->
   <button class="btn" id="vomBtn" onclick="togglePDB('vom')">Hide 2VOM</button>
   <button class="btn" id="eswBtn" onclick="toggleMap('esw')">Show ESW (2VOM)</button>
   <button class="btn" id="stransBtn" onclick="toggleMap('strans')">Show Strans (2VOM)</button>
   <button class="btn" id="sorientBtn" onclick="toggleMap('sorient')">Show Sorient (2VOM)</button>
-
-  <!-- 2jk2 buttons -->
   <button class="btn" id="jk2Btn" onclick="togglePDB('jk2')">Hide 2JK2</button>
   <button class="btn" id="esw_jk2Btn" onclick="toggleMap('esw_jk2')">Show ESW (2JK2)</button>
   <button class="btn" id="strans_jk2Btn" onclick="toggleMap('strans_jk2')">Show Strans (2JK2)</button>
   <button class="btn" id="sorient_jk2Btn" onclick="toggleMap('sorient_jk2')">Show Sorient (2JK2)</button>
 </div>
 
+<!-- Extra PDB Toggles -->
+<div id="extraPDBToggles"></div>
+
 <script>
   const stage = new NGL.Stage("viewport");
   let pdbComponents = { vom: null, jk2: null };
+  let extraPDBs = {};
   let sphereComponent = null;
+
+  const extraPDBFiles = [
+    { name: "stripped.TPI_amber_0", color: "red" },
+    { name: "stripped.TPI_amber_18286", color: "green" },
+    { name: "stripped.TPI_amber_21934", color: "blue" },
+    { name: "stripped.TPI_amber_49586", color: "orange" },
+    { name: "stripped.TPI_amber_31705", color: "purple" },
+    { name: "stripped.TPI_amber_32163", color: "cyan" },
+    { name: "stripped.TPI_amber_42283", color: "magenta" },
+    { name: "stripped.TPI_amber_48773", color: "lime" },
+    { name: "stripped.TPI_amber_3073", color: "brown" }
+  ];
 
   Promise.all([
     stage.loadFile("frame1_2vom.pdb", { defaultRepresentation: false }),
@@ -74,7 +87,25 @@
 
     pdbComponents.vom.superpose(pdbComponents.jk2, true, "name CA", "name CA");
 
-    updateSphere(); // place initial sphere
+    // Load additional PDBs and align to vom
+    extraPDBFiles.forEach(pdb => {
+      stage.loadFile(`${pdb.name}.pdb`, { defaultRepresentation: false }).then(comp => {
+        extraPDBs[pdb.name] = comp;
+        comp.setVisibility(false); // hide initially
+        comp.addRepresentation("cartoon", { color: pdb.color });
+        comp.superpose(pdbComponents.vom, true, "name CA", "name CA");
+
+        // Add toggle button
+        const btn = document.createElement("button");
+        btn.className = "btn";
+        btn.id = `toggle_${pdb.name}`;
+        btn.textContent = `Show ${pdb.name}.pdb`;
+        btn.onclick = () => toggleExtraPDB(pdb.name);
+        document.getElementById("extraPDBToggles").appendChild(btn);
+      });
+    });
+
+    updateSphere();
     stage.autoView();
   });
 
@@ -90,8 +121,7 @@
     }
 
     const shape = new NGL.Shape("highlightSphere");
-    shape.addSphere([x, y, z], [0, 1, 0], radius);  // lime color = [0, 1, 0]
-
+    shape.addSphere([x, y, z], [0, 1, 0], radius);
     sphereComponent = stage.addComponentFromObject(shape);
     sphereComponent.addRepresentation("buffer");
   }
@@ -102,7 +132,17 @@
     if (comp) {
       const visible = comp.visible;
       comp.setVisibility(!visible);
-      btn.textContent = `${visible ? "Show" : "Hide"} ${key === 'vom' ? '2vom' : '2jk2'}`;
+      btn.textContent = `${visible ? "Show" : "Hide"} ${key === 'vom' ? '2VOM' : '2JK2'}`;
+    }
+  }
+
+  function toggleExtraPDB(key) {
+    const comp = extraPDBs[key];
+    const btn = document.getElementById(`toggle_${key}`);
+    if (comp) {
+      const visible = comp.visible;
+      comp.setVisibility(!visible);
+      btn.textContent = `${visible ? "Show" : "Hide"} ${key}.pdb`;
     }
   }
 
