@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Aligned PDBs v1.2.2</title>
+  <title>GIST Surface Viewer with Aligned PDBs v1.2.3</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 500px; }
@@ -93,7 +93,7 @@
         extraPDBs[pdb.name] = comp;
         comp.setVisibility(false); // hide initially
         comp.addRepresentation("cartoon", { color: pdb.color });
-        comp.superpose(pdbComponents.vom, true, "name N or name CA or name C", "name N or name CA or name C");
+        comp.superpose(pdbComponents.vom, true, "resi 1-100", "resi 1-100");
 
         // Add toggle button
         const btn = document.createElement("button");
