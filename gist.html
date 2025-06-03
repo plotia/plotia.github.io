@@ -93,7 +93,7 @@
         extraPDBs[pdb.name] = comp;
         comp.setVisibility(false); // hide initially
         comp.addRepresentation("cartoon", { color: pdb.color });
-        comp.superpose(pdbComponents.vom, true, "name CA", "name CA");
+        comp.superpose(pdbComponents.vom, true, "name N or name CA or name C", "name N or name CA or name C");
 
         // Add toggle button
         const btn = document.createElement("button");
