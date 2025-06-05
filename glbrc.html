@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Pratham's Website</title>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <h1>Pratham Lotia</h1>
+            <h2>Graduate Researcher at Department of Computational & Systems Biology, University of Pittsburgh</h2>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="changeContent('home')">Home</a></li>
+                <li>
+                    <a href="#" onclick="toggleSubNav('research-experience')">Research and Experience</a>
+                    <ul class="sub-nav" id="research-experience">
+                        <li><a href="#" onclick="changeContent('Research')">Research</a></li>
+                        <li><a href="#" onclick="changeContent('Experience')">Experience</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" onclick="toggleSubNav('Projects')">Projects</a>
+                </li>
+                <li><a href="#" onclick="changeContent('Resume')">Resume</a></li>
+                <li><a href="#" onclick="changeContent('Future Goals')">Future Goals</a></li>
+                <li><a href="#" onclick="changeContent('Hobbies')">Hobbies</a></li>
+            </ul>
+        </nav>
+        <main>
+            <div id="content" class="content-section">
+                    <img src="image.png">
+                        <h2>About me :</h2>
+                        <p>
+                            I work at the BioAutomation Lab which is located at the 3rd floor of GLBRC. Here I'm trying to validate and design protocols for PROTEUS, the bioautomation robot which consists of an incubator, a Tecan Spark plate reader, a Floi8 liquid handler and a Liconic. This PROTEUS robot was designed by Gingko Bioworks and since this robot has to work with anerobic bacteria (which is essential in generating biofuels), the robot is completely within in an MBraun anerobic system.
+                            <br><br>
+                            With consideration to the MBraun, protocols need to be designed carefully to minimize manual overdrive at many instances.
+                            <br><br>
+                            The skillsets that I need to apply for the same are 3D CAD for custom adapter desig, Primer Design, Nanodrop for nucleic acids, M1000 Cow.
+                        </p>
+                        <h2>Contact :</h2>
+                <p>LinkedIn: <a href="https://www.linkedin.com/in/pratham-lotia11/">https://www.linkedin.com/in/pratham-lotia11/</a></p>
+                <p>Email: <a href="mailto:plotia@andrew.cmu.edu">plotia@andrew.cmu.edu</a></p>
+                    </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
