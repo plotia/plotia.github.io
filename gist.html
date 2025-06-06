@@ -72,7 +72,7 @@
       stage.loadFile(`${pdb.name}.pdb`, { defaultRepresentation: false }).then(comp => {
         extraPDBs[pdb.name] = comp;
         comp.setVisibility(false);
-        comp.addRepresentation("cartoon", { color: pdb.color });
+        comp.addRepresentation("licorice", { color: pdb.color });
         comp.superpose(pdbComponents.vom, true, "resi 1-10", "resi 1-10");
 
         const btn = document.createElement("button");
