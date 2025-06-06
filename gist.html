@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Aligned PDBs v1.2.5</title>
+  <title>GIST Surface Viewer with Sphere Placement</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 500px; }
@@ -14,15 +14,6 @@
 <body>
 
 <div id="viewport"></div>
-
-<!-- Input Controls -->
-<div class="controls">
-  <label>X: <input type="number" id="xCoord" value="40" step="1"></label>
-  <label>Y: <input type="number" id="yCoord" value="40" step="1"></label>
-  <label>Z: <input type="number" id="zCoord" value="40" step="1"></label>
-  <label>Radius: <input type="number" id="radius" value="0.5" step="0.1"></label>
-  <button class="btn" onclick="updateSphere()">Place Sphere</button>
-</div>
 
 <!-- Toggle Buttons -->
 <div>
@@ -39,11 +30,19 @@
 <!-- Extra PDB Toggles -->
 <div id="extraPDBToggles"></div>
 
+<!-- Sphere Section -->
+<h3>Add Spheres</h3>
+<div>
+  <button class="btn" onclick="addSphereInput()">Add Sphere</button>
+</div>
+<div id="sphereInputs"></div>
+
 <script>
   const stage = new NGL.Stage("viewport");
   let pdbComponents = { vom: null, jk2: null };
   let extraPDBs = {};
-  let sphereComponent = null;
+  let sphereCounter = 0;
+  let sphereComponents = {};
 
   const extraPDBFiles = [
     { name: "stripped.TPI_amber_0", color: "red" },
@@ -67,35 +66,15 @@
     pdbComponents.vom.addRepresentation("cartoon");
     pdbComponents.jk2.addRepresentation("cartoon", { color: "skyblue" });
 
-    pdbComponents.vom.addRepresentation("licorice", {
-      sele: "resi 62 or resi 95 or resi 101 or resi 109",
-      colorScheme: "element"
-    });
-    pdbComponents.vom.addRepresentation("licorice", {
-      sele: "resi 308 or resi 341 or resi 347 or resi 355",
-      colorScheme: "element"
-    });
-
-    pdbComponents.jk2.addRepresentation("licorice", {
-      sele: "resi 62 or resi 95 or resi 101 or resi 109",
-      color: "green"
-    });
-    pdbComponents.jk2.addRepresentation("licorice", {
-      sele: "resi 308 or resi 341 or resi 347 or resi 355",
-      color: "yellow"
-    });
-
     pdbComponents.vom.superpose(pdbComponents.jk2, true, "name CA", "name CA");
 
-    // Load additional PDBs and align to vom
     extraPDBFiles.forEach(pdb => {
       stage.loadFile(`${pdb.name}.pdb`, { defaultRepresentation: false }).then(comp => {
         extraPDBs[pdb.name] = comp;
-        comp.setVisibility(false); // hide initially
-        comp.addRepresentation("licorice", { color: pdb.color });
-        comp.superpose(pdbComponents.vom, true, "resi 1-100", "resi 1-100");
+        comp.setVisibility(false);
+        comp.addRepresentation("cartoon", { color: pdb.color });
+        comp.superpose(pdbComponents.vom, true, "resi 1-10", "resi 1-10");
 
-        // Add toggle button
         const btn = document.createElement("button");
         btn.className = "btn";
         btn.id = `toggle_${pdb.name}`;
@@ -105,26 +84,8 @@
       });
     });
 
-    updateSphere();
     stage.autoView();
   });
-
-  function updateSphere() {
-    const x = parseFloat(document.getElementById("xCoord").value);
-    const y = parseFloat(document.getElementById("yCoord").value);
-    const z = parseFloat(document.getElementById("zCoord").value);
-    const radius = parseFloat(document.getElementById("radius").value);
-
-    if (sphereComponent) {
-      stage.removeComponent(sphereComponent);
-      sphereComponent = null;
-    }
-
-    const shape = new NGL.Shape("highlightSphere");
-    shape.addSphere([x, y, z], [0, 1, 0], radius);
-    sphereComponent = stage.addComponentFromObject(shape);
-    sphereComponent.addRepresentation("buffer");
-  }
 
   function togglePDB(key) {
     const comp = pdbComponents[key];
@@ -147,48 +108,12 @@
   }
 
   const maps = {
-    esw: {
-      file: "gist-Esw-dens_2VOM.dx",
-      color: "red",
-      isolevel: -0.007,
-      component: null,
-      btnId: "eswBtn"
-    },
-    strans: {
-      file: "gist-dTStrans-dens_2VOM.dx",
-      color: "blue",
-      isolevel: -0.007,
-      component: null,
-      btnId: "stransBtn"
-    },
-    sorient: {
-      file: "gist-dTSorient-dens_2VOM.dx",
-      color: "green",
-      isolevel: -0.007,
-      component: null,
-      btnId: "sorientBtn"
-    },
-    esw_jk2: {
-      file: "gist-Esw-dens.dx",
-      color: "pink",
-      isolevel: -0.007,
-      component: null,
-      btnId: "esw_jk2Btn"
-    },
-    strans_jk2: {
-      file: "gist-dTStrans-dens.dx",
-      color: "cyan",
-      isolevel: -0.007,
-      component: null,
-      btnId: "strans_jk2Btn"
-    },
-    sorient_jk2: {
-      file: "gist-dTSorient-dens.dx",
-      color: "orange",
-      isolevel: -0.007,
-      component: null,
-      btnId: "sorient_jk2Btn"
-    }
+    esw: { file: "gist-Esw-dens_2VOM.dx", color: "red", isolevel: -0.007, component: null, btnId: "eswBtn" },
+    strans: { file: "gist-dTStrans-dens_2VOM.dx", color: "blue", isolevel: -0.007, component: null, btnId: "stransBtn" },
+    sorient: { file: "gist-dTSorient-dens_2VOM.dx", color: "green", isolevel: -0.007, component: null, btnId: "sorientBtn" },
+    esw_jk2: { file: "gist-Esw-dens.dx", color: "pink", isolevel: -0.007, component: null, btnId: "esw_jk2Btn" },
+    strans_jk2: { file: "gist-dTStrans-dens.dx", color: "cyan", isolevel: -0.007, component: null, btnId: "strans_jk2Btn" },
+    sorient_jk2: { file: "gist-dTSorient-dens.dx", color: "orange", isolevel: -0.007, component: null, btnId: "sorient_jk2Btn" }
   };
 
   function toggleMap(type) {
@@ -215,6 +140,39 @@
       map.component = null;
       btn.textContent = `Show ${btn.textContent.replace("Hide ", "")}`;
     }
+  }
+
+  function addSphereInput() {
+    const container = document.getElementById("sphereInputs");
+    const id = `sphere${sphereCounter}`;
+    const div = document.createElement("div");
+    div.innerHTML = `
+      <label>X: <input type="number" id="${id}_x" value="40" step="1"></label>
+      <label>Y: <input type="number" id="${id}_y" value="40" step="1"></label>
+      <label>Z: <input type="number" id="${id}_z" value="40" step="1"></label>
+      <label>Radius: <input type="number" id="${id}_r" value="0.5" step="0.1"></label>
+      <button class="btn" onclick="placeSphere('${id}')">Place Sphere</button>
+    `;
+    container.appendChild(div);
+    sphereCounter++;
+  }
+
+  function placeSphere(id) {
+    const x = parseFloat(document.getElementById(`${id}_x`).value);
+    const y = parseFloat(document.getElementById(`${id}_y`).value);
+    const z = parseFloat(document.getElementById(`${id}_z`).value);
+    const r = parseFloat(document.getElementById(`${id}_r`).value);
+
+    if (sphereComponents[id]) {
+      stage.removeComponent(sphereComponents[id]);
+    }
+
+    const shape = new NGL.Shape(`shape_${id}`);
+    shape.addSphere([x, y, z], [0, 1, 0], r);
+
+    const comp = stage.addComponentFromObject(shape);
+    comp.addRepresentation("buffer");
+    sphereComponents[id] = comp;
   }
 </script>
 
