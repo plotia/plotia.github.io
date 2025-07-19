@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
+</head>
+<body>
+  <div id="viewport" style="width:100%; height:100vh;"></div>
+  <script>
+    var stage = new NGL.Stage("viewport");
+    stage.loadFile("system_0.pdb").then(function(o) {
+      o.addRepresentation("cartoon");
+      o.autoView();
+    });
+    stage.loadFile("md_t1_0.xtc", { ext: "xtc" }).then(function(o) {
+      o.addTrajectoryRepresentation({ color: "element" });
+    });
+  </script>
+</body>
+</html>
