@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Sphere Placement v1.2.4</title>
+  <title>GIST Surface Viewer with Sphere Placement v1.2.5</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 800px; }
@@ -92,13 +92,23 @@
       comp.setVisibility(false);
 
       // Pocket file (fpocket output)
-      if (pdb.name === "snap0_out") {
-       comp.addRepresentation("spacefill", { color: "white", scale: 0.6 });
-      } 
-      // Protein or other PDBs
-      else {
-       comp.addRepresentation("licorice", { color: "red" });
-      }
+    if (pdb.name === "snap0_out") {
+      // Protein part in snap0_out
+      comp.addRepresentation("licorice", {
+      sele: "not hetero",   // ATOM records (protein)
+      color: "red",
+      opacity: 1.0
+      });
+
+      // Pocket part in snap0_out
+     comp.addRepresentation("spacefill", {
+       sele: "hetero",       // HETATM records (pockets)
+       color: "white",
+       scale: 0.5
+     });
+    } else {
+      comp.addRepresentation("licorice", { color: "red" });
+    }
 
       comp.superpose(pdbComponents.vom, true, "resi 1-100", "resi 1-100");
 
