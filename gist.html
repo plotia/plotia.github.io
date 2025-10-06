@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Sphere Placement v1.2.5</title>
+  <title>GIST Surface Viewer with Sphere Placement v1.2.6</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 800px; }
@@ -96,7 +96,7 @@
       // Protein part in snap0_out
       comp.addRepresentation("licorice", {
       sele: "not hetero",   // ATOM records (protein)
-      color: "red",
+      colorScheme: "element",
       opacity: 1.0
       });
 
@@ -104,7 +104,7 @@
      comp.addRepresentation("spacefill", {
        sele: "hetero",       // HETATM records (pockets)
        color: "white",
-       scale: 0.5
+       scale: 0.2
      });
     } else {
       comp.addRepresentation("licorice", { color: "red" });
