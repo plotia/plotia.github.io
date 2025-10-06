@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Sphere Placement v1.3.1</title>
+  <title>GIST Surface Viewer with Sphere Placement v1.3.3</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 800px; }
@@ -99,28 +99,30 @@
 
       // Pocket file (fpocket output)
       if (pdb.name === "snap0_out") {
-      // Protein part in snap0_out
-      comp.addRepresentation("licorice", {
-      sele: "not hetero",
-      colorScheme: "element",
-      opacity: 1.0
-      });
+  // Show the slider controls
+  document.getElementById("pocketControlDiv").style.display = "block";
 
-    // Pocket part (white spheres)
-    const pocketRep = comp.addRepresentation("spacefill", {
+  // Protein part in snap0_out
+  comp.addRepresentation("licorice", {
+    sele: "not hetero",
+    colorScheme: "element",
+    opacity: 1.0
+  });
+
+  // Pocket part (white spheres)
+  const pocketRep = comp.addRepresentation("spacefill", {
     sele: "hetero",
     color: "white",
     scale: 0.2
   });
 
-  // Connect the slider to control pocket size
+  // Connect slider to scale pocket spheres
   const pocketSlider = document.getElementById("pocketScale");
-  if (pocketSlider) {
-    pocketSlider.addEventListener("input", (event) => {
-      const newScale = parseFloat(event.target.value);
-      pocketRep.setParameters({ scale: newScale });
-    });
-  }
+  pocketSlider.addEventListener("input", (event) => {
+    pocketRep.setParameters({ scale: parseFloat(event.target.value) });
+  });
+}
+
 } else {
   comp.addRepresentation("licorice", { color: "red" });
 }
