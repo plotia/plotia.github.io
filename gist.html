@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Sphere Placement v1.2.3</title>
+  <title>GIST Surface Viewer with Sphere Placement v1.2.4</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 800px; }
@@ -88,19 +88,29 @@
 
     extraPDBFiles.forEach(pdb => {
       stage.loadFile(`${pdb.name}.pdb`, { defaultRepresentation: false }).then(comp => {
-        extraPDBs[pdb.name] = comp;
-        comp.setVisibility(false);
-        comp.addRepresentation("spacefill", { color: pdb.color, scale: 0.5 });
-        comp.superpose(pdbComponents.vom, true, "resi 1-100", "resi 1-100");
+      extraPDBs[pdb.name] = comp;
+      comp.setVisibility(false);
 
-        const btn = document.createElement("button");
-        btn.className = "btn";
-        btn.id = `toggle_${pdb.name}`;
-        btn.textContent = `Show ${pdb.name}.pdb`;
-        btn.onclick = () => toggleExtraPDB(pdb.name);
-        document.getElementById("extraPDBToggles").appendChild(btn);
+      // Pocket file (fpocket output)
+      if (pdb.name === "snap0_out") {
+       comp.addRepresentation("spacefill", { color: "white", scale: 0.6 });
+      } 
+      // Protein or other PDBs
+      else {
+       comp.addRepresentation("licorice", { color: "red" });
+      }
+
+      comp.superpose(pdbComponents.vom, true, "resi 1-100", "resi 1-100");
+
+      const btn = document.createElement("button");
+      btn.className = "btn";
+      btn.id = `toggle_${pdb.name}`;
+      btn.textContent = `Show ${pdb.name}.pdb`;
+      btn.onclick = () => toggleExtraPDB(pdb.name);
+      document.getElementById("extraPDBToggles").appendChild(btn);
       });
     });
+
 
     stage.autoView();
   });
