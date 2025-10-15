@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Sphere Placement v1.4.0</title>
+  <title>GIST Surface Viewer with Sphere Placement v1.4.1</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 800px; }
@@ -106,33 +106,21 @@ if (pdb.name === "snap0_out") {
             colorScheme: "element",
             opacity: 1.0
           });
-
-          // Pocket part (white spheres) with dynamic size
-   let pocketScale = 0.2; // initial scale value (default)
-
-   const pocketRep = comp.addRepresentation("spacefill", {
-   sele: "hetero",
-   color: "white",
-   scale: pocketScale
-    });
-
-  // Link slider to control pocket scale
-  const pocketSlider = document.getElementById("pocketScale");
-  const pocketControlDiv = document.getElementById("pocketControlDiv");
-
-  // Make the slider visible once pocket file is loaded
-  pocketControlDiv.style.display = "block";
-
-  // Sync slider position with variable
-  pocketSlider.value = pocketScale;
-
-  // Update scale dynamically
-  pocketSlider.addEventListener("input", (event) => {
-  pocketScale = parseFloat(event.target.value);
-  pocketRep.setParameters({ scale: pocketScale });
-  });
-
-else {
+ // Pocket part (white spheres)
+          const pocketRep = comp.addRepresentation("spacefill", {
+            sele: "hetero",
+            color: "white",
+            scale: 0.2
+          });
+          // Connect the slider to control pocket size
+          const pocketSlider = document.getElementById("pocketScale");
+          if (pocketSlider) {
+            pocketSlider.addEventListener("input", (event) => {
+              const newScale = parseFloat(event.target.value);
+              pocketRep.setParameters({ scale: newScale });
+            });
+          }
+        } else {
           comp.addRepresentation("licorice", { color: "red" });
         }
 
