@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Sphere Placement v1.4.1</title>
+  <title>GIST Surface Viewer with Sphere Placement v1.4.2</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 800px; }
@@ -110,7 +110,7 @@ if (pdb.name === "snap0_out") {
           const pocketRep = comp.addRepresentation("spacefill", {
             sele: "hetero",
             color: "white",
-            scale: 0.2
+            scale: 0.1
           });
           // Connect the slider to control pocket size
           const pocketSlider = document.getElementById("pocketScale");
