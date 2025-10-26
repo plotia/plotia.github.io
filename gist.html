@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Sphere Placement v1.4.5</title>
+  <title>GIST Surface Viewer with Sphere Placement v1.4.6</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 800px; }
@@ -100,26 +100,61 @@
 
         // Pocket file (fpocket output)
 if (pdb.name === "snap6_out") {
-          // Protein part in snap6_out
-          comp.addRepresentation("licorice", {
-            sele: "not hetero",
-            colorScheme: "element",
-            opacity: 1.0
-          });
- // Pocket part (white spheres)
-          const pocketRep = comp.addRepresentation("spacefill", {
-            sele: "hetero",
-            color: "white",
-            scale: 0.1
-          });
-          // Connect the slider to control pocket size
-          const pocketSlider = document.getElementById("pocketScale");
-          if (pocketSlider) {
-            pocketSlider.addEventListener("input", (event) => {
-              const newScale = parseFloat(event.target.value);
-              pocketRep.setParameters({ scale: newScale });
-            });
-          }
+  // Protein part
+  comp.addRepresentation("licorice", {
+    sele: "not hetero",
+    colorScheme: "element",
+    opacity: 1.0
+  });
+
+  // --- Heteroatom coloring by residue number ---
+  const colorMap = {};
+  const colorList = [
+    "red", "blue", "green", "orange", "magenta",
+    "cyan", "yellow", "lime", "pink", "purple", "brown"
+  ];
+  let colorIndex = 0;
+
+  // Get unique residue numbers for heteroatoms
+  const heteroResidues = new Set();
+  comp.structure.eachAtom(atom => {
+    if (atom.hetero) heteroResidues.add(atom.resno);
+  });
+
+  // Assign a color to each residue number
+  heteroResidues.forEach(resno => {
+    colorMap[resno] = colorList[colorIndex % colorList.length];
+    colorIndex++;
+  });
+
+  // Add a spacefill representation for each residue group
+  Object.keys(colorMap).forEach(resno => {
+    comp.addRepresentation("spacefill", {
+      sele: `hetero and resi ${resno}`,
+      color: colorMap[resno],
+      scale: 0.5   // default radius scale
+    });
+  });
+
+  // --- Slider to control heteroatom sphere size ---
+  const pocketSlider = document.getElementById("pocketScale");
+  pocketSlider.style.display = "block";
+  pocketSlider.min = 0.1;
+  pocketSlider.max = 1.0;
+  pocketSlider.step = 0.05;
+  pocketSlider.value = 0.5;
+  pocketSlider.previousValue = 0.5;
+
+  pocketSlider.addEventListener("input", (event) => {
+    const newScale = parseFloat(event.target.value);
+    comp.reprList.forEach(rep => {
+      if (rep.getParameters().sele.includes("hetero")) {
+        rep.setParameters({ scale: newScale });
+      }
+    });
+  });
+}
+
         } else {
           comp.addRepresentation("licorice", { color: "red" });
         }
