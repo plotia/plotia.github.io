@@ -156,17 +156,62 @@ if (pdb.name === "snap6_out") {
 }
 
        else {
-          comp.addRepresentation("licorice", { color: "red" });
+          if (pdb.name === "snap6_out") {
+  // Protein part
+  comp.addRepresentation("licorice", {
+    sele: "not hetero",
+    colorScheme: "element",
+    opacity: 1.0
+  });
+
+  // --- Heteroatom coloring by residue number ---
+  const colorMap = {};
+  const colorList = [
+    "red", "blue", "green", "orange", "magenta",
+    "cyan", "yellow", "lime", "pink", "purple", "brown"
+  ];
+  let colorIndex = 0;
+
+  const heteroResidues = new Set();
+  comp.structure.eachAtom(atom => {
+    if (atom.hetero) heteroResidues.add(atom.resno);
+  });
+
+  heteroResidues.forEach(resno => {
+    colorMap[resno] = colorList[colorIndex % colorList.length];
+    colorIndex++;
+  });
+
+  // Add colored spheres for each residue
+  Object.keys(colorMap).forEach(resno => {
+    comp.addRepresentation("spacefill", {
+      sele: `hetero and resi ${resno}`,
+      color: colorMap[resno],
+      scale: 0.8 // larger default so it's visible
+    });
+  });
+
+  // --- Show and link slider ---
+  const pocketDiv = document.getElementById("pocketControlDiv");
+  if (pocketDiv) pocketDiv.style.display = "block";
+
+  const pocketSlider = document.getElementById("pocketScale");
+  if (pocketSlider) {
+    pocketSlider.value = 0.8;
+    pocketSlider.addEventListener("input", (event) => {
+      const newScale = parseFloat(event.target.value);
+      comp.reprList.forEach(rep => {
+        if (rep.getParameters().sele.includes("hetero")) {
+          rep.setParameters({ scale: newScale });
         }
+      });
+    });
+  }
 
-        comp.superpose(pdbComponents.vom, true, "resi 1-100", "resi 1-100");
+  // Make sure snap6_out is visible
+  comp.setVisibility(true);
+}
 
-        const btn = document.createElement("button");
-        btn.className = "btn";
-        btn.id = `toggle_${pdb.name}`;
-        btn.textContent = `Show ${pdb.name}.pdb`;
-        btn.onclick = () => toggleExtraPDB(pdb.name);
-        document.getElementById("extraPDBToggles").appendChild(btn);
       });
     });
 
