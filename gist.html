@@ -2,13 +2,13 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Sphere Placement v1.4.7</title>
+  <title>GIST Surface Viewer with Sphere Placement v1.4.8</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 800px; }
     .btn { margin: 5px; padding: 8px 12px; font-size: 14px; }
     .controls { margin: 10px 0; }
-    .controls input { width: 70px; margin-right: 10px; }
+    .controls input { width: 150px; margin-right: 10px; }
   </style>
 </head>
 <body>
@@ -38,10 +38,10 @@
 <div id="sphereInputs"></div>
 
 <!-- Pocket Controls -->
-<h3>Pocket Controls</h3>
+<h3>Heteroatom Controls</h3>
 <div id="pocketControlDiv" class="controls" style="display:none;">
   <label for="pocketScale">Heteroatom size:</label>
-  <input type="range" id="pocketScale" min="0.1" max="1.0" step="0.05" value="0.8">
+  <input type="range" id="pocketScale" min="0.1" max="2.0" step="0.1" value="1.2">
 </div>
 
 <script>
@@ -63,6 +63,7 @@
     { name: "stripped.TPI_amber_3073", color: "brown" }
   ];
 
+  // Load 2VOM and 2JK2 first
   Promise.all([
     stage.loadFile("frame1_2vom.pdb", { defaultRepresentation: false }),
     stage.loadFile("frame1_2jk2.pdb", { defaultRepresentation: false })
@@ -70,39 +71,26 @@
     pdbComponents.vom = components[0];
     pdbComponents.jk2 = components[1];
 
+    // Main structures
     pdbComponents.vom.addRepresentation("cartoon");
     pdbComponents.jk2.addRepresentation("cartoon", { color: "skyblue" });
 
-    pdbComponents.vom.addRepresentation("licorice", {
-      sele: "resi 62 or resi 95 or resi 101 or resi 109",
-      colorScheme: "element"
-    });
-    pdbComponents.vom.addRepresentation("licorice", {
-      sele: "resi 308 or resi 341 or resi 347 or resi 355",
-      colorScheme: "element"
-    });
-
-    pdbComponents.jk2.addRepresentation("licorice", {
-      sele: "resi 62 or resi 95 or resi 101 or resi 109",
-      color: "green"
-    });
-    pdbComponents.jk2.addRepresentation("licorice", {
-      sele: "resi 308 or resi 341 or resi 347 or resi 355",
-      color: "yellow"
-    });
-
     pdbComponents.vom.superpose(pdbComponents.jk2, true, "name CA", "name CA");
 
-    // Load extra PDBs (snap6_out + others)
+    // Load all extra PDBs including snap6_out
     extraPDBFiles.forEach(pdb => {
       stage.loadFile(`${pdb.name}.pdb`, { defaultRepresentation: false }).then(comp => {
         extraPDBs[pdb.name] = comp;
         comp.setVisibility(false);
 
+        // Special handling for snap6_out
         if (pdb.name === "snap6_out") {
+          // Align with 2VOM
+          comp.superpose(pdbComponents.vom, true, "name CA", "name CA");
+
           // Protein part
           comp.addRepresentation("licorice", {
-            sele: "not hetero",
+            sele: "not HETATM",
             colorScheme: "element",
             opacity: 1.0
           });
@@ -128,9 +116,9 @@
           // Add colored spheres for each residue
           Object.keys(colorMap).forEach(resno => {
             comp.addRepresentation("spacefill", {
-              sele: `hetero and resi ${resno}`,
+              sele: `HETATM and resi ${resno}`,
               color: colorMap[resno],
-              scale: 0.8
+              scale: 1.2
             });
           });
 
@@ -140,23 +128,24 @@
 
           const pocketSlider = document.getElementById("pocketScale");
           if (pocketSlider) {
-            pocketSlider.value = 0.8;
+            pocketSlider.value = 1.2;
             pocketSlider.addEventListener("input", (event) => {
               const newScale = parseFloat(event.target.value);
               comp.reprList.forEach(rep => {
-                if (rep.getParameters().sele.includes("hetero")) {
+                if (rep.getParameters().sele.includes("HETATM")) {
                   rep.setParameters({ scale: newScale });
                 }
               });
             });
           }
 
-          comp.setVisibility(true); // only snap6_out visible when toggled
+          comp.setVisibility(true); // show when toggled
         } else {
+          // Normal PDBs
           comp.addRepresentation("licorice", { color: pdb.color });
         }
 
-        // Add toggle button dynamically
+        // Create toggle button dynamically
         const btn = document.createElement("button");
         btn.className = "btn";
         btn.id = `toggle_${pdb.name}`;
@@ -169,6 +158,7 @@
     stage.autoView();
   });
 
+  // Toggle functions
   function togglePDB(key) {
     const comp = pdbComponents[key];
     const btn = document.getElementById(key === 'vom' ? 'vomBtn' : 'jk2Btn');
@@ -189,6 +179,7 @@
     }
   }
 
+  // Map controls
   const maps = {
     esw: { file: "gist-Esw-dens_2VOM.dx", color: "red", isolevel: -0.007, component: null, btnId: "eswBtn" },
     strans: { file: "gist-dTStrans-dens_2VOM.dx", color: "blue", isolevel: -0.007, component: null, btnId: "stransBtn" },
@@ -224,6 +215,7 @@
     }
   }
 
+  // Sphere placement tool
   function addSphereInput() {
     const container = document.getElementById("sphereInputs");
     const id = `sphere${sphereCounter}`;
