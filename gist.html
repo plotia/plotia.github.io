@@ -2,13 +2,13 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Sphere Placement v1.4.11</title>
+  <title>GIST Surface Viewer with Sphere Placement v1.4.5</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 800px; }
     .btn { margin: 5px; padding: 8px 12px; font-size: 14px; }
     .controls { margin: 10px 0; }
-    .controls input { width: 150px; margin-right: 10px; }
+    .controls input { width: 70px; margin-right: 10px; }
   </style>
 </head>
 <body>
@@ -38,10 +38,10 @@
 <div id="sphereInputs"></div>
 
 <!-- Pocket Controls -->
-<h3>Heteroatom Controls</h3>
+<h3>Pocket Controls</h3>
 <div id="pocketControlDiv" class="controls" style="display:none;">
-  <label for="pocketScale">Heteroatom size:</label>
-  <input type="range" id="pocketScale" min="0.1" max="2.0" step="0.1" value="1.2">
+  <label for="pocketScale">Pocket size:</label>
+  <input type="range" id="pocketScale" min="0.01" max="1.0" step="0.05" value="0.1">
 </div>
 
 <script>
@@ -63,7 +63,6 @@
     { name: "stripped.TPI_amber_3073", color: "brown" }
   ];
 
-  // Load 2VOM and 2JK2 first
   Promise.all([
     stage.loadFile("frame1_2vom.pdb", { defaultRepresentation: false }),
     stage.loadFile("frame1_2jk2.pdb", { defaultRepresentation: false })
@@ -71,84 +70,62 @@
     pdbComponents.vom = components[0];
     pdbComponents.jk2 = components[1];
 
-    // Main structures
     pdbComponents.vom.addRepresentation("cartoon");
     pdbComponents.jk2.addRepresentation("cartoon", { color: "skyblue" });
 
+    pdbComponents.vom.addRepresentation("licorice", {
+      sele: "resi 62 or resi 95 or resi 101 or resi 109",
+      colorScheme: "element"
+    });
+    pdbComponents.vom.addRepresentation("licorice", {
+      sele: "resi 308 or resi 341 or resi 347 or resi 355",
+      colorScheme: "element"
+    });
+
+    pdbComponents.jk2.addRepresentation("licorice", {
+      sele: "resi 62 or resi 95 or resi 101 or resi 109",
+      color: "green"
+    });
+    pdbComponents.jk2.addRepresentation("licorice", {
+      sele: "resi 308 or resi 341 or resi 347 or resi 355",
+      color: "yellow"
+    });
+
     pdbComponents.vom.superpose(pdbComponents.jk2, true, "name CA", "name CA");
 
-    // Load all extra PDBs including snap6_out
     extraPDBFiles.forEach(pdb => {
       stage.loadFile(`${pdb.name}.pdb`, { defaultRepresentation: false }).then(comp => {
         extraPDBs[pdb.name] = comp;
         comp.setVisibility(false);
 
-        if (pdb.name === "snap6_out") {
-  // --- Align snap6_out with 2VOM backbone ---
-  comp.superpose(pdbComponents.vom, true, "backbone", "backbone");
-
-  // --- Show protein part as cartoon (not hetero) ---
-  comp.addRepresentation("cartoon", {
-    sele: "protein",
-    colorScheme: "element",
-    opacity: 1.0
-  });
-
-  // --- Detect heteroatoms and group by residue number ---
-  const colorMap = {};
-  const colorList = [
-    "red", "blue", "green", "orange", "magenta",
-    "cyan", "yellow", "lime", "pink", "purple", "brown"
-  ];
-  let colorIndex = 0;
-
-  const heteroResidues = new Set();
-  comp.structure.eachAtom(atom => {
-    // any atom not in standard residues (HETATM)
-    if (atom.hetero) heteroResidues.add(atom.resno);
-  });
-
-  // Assign colors
-  heteroResidues.forEach(resno => {
-    colorMap[resno] = colorList[colorIndex % colorList.length];
-    colorIndex++;
-  });
-
-  // --- Add spheres for each hetero residue ---
-  Object.keys(colorMap).forEach(resno => {
-    comp.addRepresentation("spacefill", {
-      sele: `not protein and resi ${resno}`,
-      color: colorMap[resno],
-      scale: 1.2
-    });
-  });
-
-  // --- Make the heteroatom control slider visible ---
-  const pocketDiv = document.getElementById("pocketControlDiv");
-  if (pocketDiv) pocketDiv.style.display = "block";
-
-  const pocketSlider = document.getElementById("pocketScale");
-  if (pocketSlider) {
-    pocketSlider.value = 1.2;
-    pocketSlider.addEventListener("input", (event) => {
-      const newScale = parseFloat(event.target.value);
-      comp.reprList.forEach(rep => {
-        // adjust only the heteroatom spacefill representations
-        if (rep.getParameters().sele.includes("not protein")) {
-          rep.setParameters({ scale: newScale });
+        // Pocket file (fpocket output)
+if (pdb.name === "snap6_out") {
+          // Protein part in snap6_out
+          comp.addRepresentation("licorice", {
+            sele: "not hetero",
+            colorScheme: "element",
+            opacity: 1.0
+          });
+ // Pocket part (white spheres)
+          const pocketRep = comp.addRepresentation("spacefill", {
+            sele: "hetero",
+            color: "white",
+            scale: 0.1
+          });
+          // Connect the slider to control pocket size
+          const pocketSlider = document.getElementById("pocketScale");
+          if (pocketSlider) {
+            pocketSlider.addEventListener("input", (event) => {
+              const newScale = parseFloat(event.target.value);
+              pocketRep.setParameters({ scale: newScale });
+            });
+          }
+        } else {
+          comp.addRepresentation("licorice", { color: "red" });
         }
-      });
-    });
-  }
 
-  comp.setVisibility(true);
-}
-else {
-  comp.addRepresentation("licorice", { color: pdb.color });
-}
+        comp.superpose(pdbComponents.vom, true, "resi 1-100", "resi 1-100");
 
-
-        // Create toggle button dynamically
         const btn = document.createElement("button");
         btn.className = "btn";
         btn.id = `toggle_${pdb.name}`;
@@ -161,7 +138,6 @@ else {
     stage.autoView();
   });
 
-  // Toggle functions
   function togglePDB(key) {
     const comp = pdbComponents[key];
     const btn = document.getElementById(key === 'vom' ? 'vomBtn' : 'jk2Btn');
@@ -182,7 +158,6 @@ else {
     }
   }
 
-  // Map controls
   const maps = {
     esw: { file: "gist-Esw-dens_2VOM.dx", color: "red", isolevel: -0.007, component: null, btnId: "eswBtn" },
     strans: { file: "gist-dTStrans-dens_2VOM.dx", color: "blue", isolevel: -0.007, component: null, btnId: "stransBtn" },
@@ -218,7 +193,6 @@ else {
     }
   }
 
-  // Sphere placement tool
   function addSphereInput() {
     const container = document.getElementById("sphereInputs");
     const id = `sphere${sphereCounter}`;
