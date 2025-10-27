@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GIST Surface Viewer with Sphere Placement v1.4.10</title>
+  <title>GIST Surface Viewer with Sphere Placement v1.4.11</title>
   <script src="https://unpkg.com/ngl@latest/dist/ngl.js"></script>
   <style>
     #viewport { width: 100%; height: 800px; }
@@ -83,67 +83,70 @@
         extraPDBs[pdb.name] = comp;
         comp.setVisibility(false);
 
-        // Special handling for snap6_out
         if (pdb.name === "snap6_out") {
-          // Align with 2VOM
-          comp.superpose(pdbComponents.vom, true, "backbone", "backbone");
+  // --- Align snap6_out with 2VOM backbone ---
+  comp.superpose(pdbComponents.vom, true, "backbone", "backbone");
 
-          // Protein part
-          comp.addRepresentation("cartoon", {
-          sele: "protein",
-          colorScheme: "element",
-          opacity: 1.0
-          });
+  // --- Show protein part as cartoon (not hetero) ---
+  comp.addRepresentation("cartoon", {
+    sele: "protein",
+    colorScheme: "element",
+    opacity: 1.0
+  });
 
-          // --- Heteroatom coloring by residue number ---
-          const colorMap = {};
-          const colorList = [
-            "red", "blue", "green", "orange", "magenta",
-            "cyan", "yellow", "lime", "pink", "purple", "brown"
-          ];
-          let colorIndex = 0;
+  // --- Detect heteroatoms and group by residue number ---
+  const colorMap = {};
+  const colorList = [
+    "red", "blue", "green", "orange", "magenta",
+    "cyan", "yellow", "lime", "pink", "purple", "brown"
+  ];
+  let colorIndex = 0;
 
-          const heteroResidues = new Set();
-          comp.structure.eachAtom(atom => {
-            if (atom.hetero) heteroResidues.add(atom.resno);
-          });
+  const heteroResidues = new Set();
+  comp.structure.eachAtom(atom => {
+    // any atom not in standard residues (HETATM)
+    if (atom.hetero) heteroResidues.add(atom.resno);
+  });
 
-          heteroResidues.forEach(resno => {
-            colorMap[resno] = colorList[colorIndex % colorList.length];
-            colorIndex++;
-          });
+  // Assign colors
+  heteroResidues.forEach(resno => {
+    colorMap[resno] = colorList[colorIndex % colorList.length];
+    colorIndex++;
+  });
 
-          // Add colored spheres for each residue
-          Object.keys(colorMap).forEach(resno => {
-            comp.addRepresentation("spacefill", {
-              sele: `hetero and resi ${resno}`,
-              color: colorMap[resno],
-              scale: 1.2
-            });
-          });
+  // --- Add spheres for each hetero residue ---
+  Object.keys(colorMap).forEach(resno => {
+    comp.addRepresentation("spacefill", {
+      sele: `not protein and resi ${resno}`,
+      color: colorMap[resno],
+      scale: 1.2
+    });
+  });
 
-          // --- Show and link slider ---
-          const pocketDiv = document.getElementById("pocketControlDiv");
-          if (pocketDiv) pocketDiv.style.display = "block";
+  // --- Make the heteroatom control slider visible ---
+  const pocketDiv = document.getElementById("pocketControlDiv");
+  if (pocketDiv) pocketDiv.style.display = "block";
 
-          const pocketSlider = document.getElementById("pocketScale");
-          if (pocketSlider) {
-            pocketSlider.value = 1.2;
-            pocketSlider.addEventListener("input", (event) => {
-              const newScale = parseFloat(event.target.value);
-              comp.reprList.forEach(rep => {
-                if (rep.getParameters().sele.includes("hetero")) {
-                  rep.setParameters({ scale: newScale });
-                }
-              });
-            });
-          }
-
-          comp.setVisibility(true); // show when toggled
-        } else {
-          // Normal PDBs
-          comp.addRepresentation("licorice", { color: pdb.color });
+  const pocketSlider = document.getElementById("pocketScale");
+  if (pocketSlider) {
+    pocketSlider.value = 1.2;
+    pocketSlider.addEventListener("input", (event) => {
+      const newScale = parseFloat(event.target.value);
+      comp.reprList.forEach(rep => {
+        // adjust only the heteroatom spacefill representations
+        if (rep.getParameters().sele.includes("not protein")) {
+          rep.setParameters({ scale: newScale });
         }
+      });
+    });
+  }
+
+  comp.setVisibility(true);
+}
+else {
+  comp.addRepresentation("licorice", { color: pdb.color });
+}
+
 
         // Create toggle button dynamically
         const btn = document.createElement("button");
